@@ -10,6 +10,7 @@
 git clone git@github.com:nickapopolis/rails-recipes.git
 cd rails-recipes
 bundle install
+docker-compose up -d
 rails db:create
 rails db:migrate
 rails server
