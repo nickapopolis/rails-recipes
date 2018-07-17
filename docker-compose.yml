@@ -1,0 +1,7 @@
+version: "2.1"
+services:
+  postgres:
+    image: postgres:9.3
+    restart: unless-stopped
+    ports:
+     - "5432:5432"
