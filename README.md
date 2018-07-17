@@ -1,24 +1,23 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Development dependencies
+  * Docker for mac
+  * Ruby 2.3.1p112
+  * Yarn v0.27.5
 
-Things you may want to cover:
+## Development Setup
+```
+git clone git@github.com:nickapopolis/rails-recipes.git
+cd rails-recipes
+bundle install
+rails db:create
+rails db:migrate
+rails server
+```
 
-* Ruby version
+## Testing 
+Run after setup
+```
+rails test
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
