@@ -4,7 +4,7 @@
 
 ## Development dependencies
   * Docker for mac
-  * Ruby 2.3.1p112
+  * Ruby 2.3.1
   * Yarn v0.27.5
 
 ## Development Setup
