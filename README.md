@@ -1,7 +1,6 @@
 # rails-recipes
 
-[![Build Status](https://travis-ci.org/nickapopolis/rails-recipes.svg?branch=master)](https://travis-ci.org/nickapopolis
-
+https://travis-ci.org/nickapopolis/rails-recipes.svg?branch=master
 
 ## Development dependencies
   * Docker for mac
