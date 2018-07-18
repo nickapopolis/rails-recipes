@@ -1,0 +1,19 @@
+language: ruby
+
+rvm:
+  - 2.2.1
+
+services:
+  postgresql: "9.4"
+
+env:
+  - RAILS_ENV="development"
+  - DB_USER="postgres"
+  - DB_PASS="postgres"
+  - DB_HOST="127.0.0.1"
+  - MAIL_HOST="127.0.0.1"
+
+script:
+  - bin/rails db:create
+  - bin/rails db:migrate
+  - bin/rails test
