@@ -9,6 +9,7 @@ import primaryColor from '../lib/primary-color';
 import { createBrowserHistory } from 'history';
 import reducers from '../reducers';
 import routes from '../routes';
+import '../styles/app';
 
 const history = createBrowserHistory();
 const store = createStore(
@@ -18,10 +19,17 @@ const store = createStore(
 
 const theme = createMuiTheme({
   palette: {
-    primary: primaryColor,
-    secondary: blue,
-    background: {
-      default: '#eceef0',
+    primary: {
+      light: '#bef67a',
+      main: '#8bc34a',
+      dark: '#5a9216',
+      contrastText: '#000000',
+    },
+    secondary: {
+      light: '#819ca9',
+      main: '#546e7a',
+      dark: '#29434e',
+      contrastText: '#ffffff',
     },
   },
 });
