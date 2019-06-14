@@ -1,0 +1,91 @@
+# An ISO 8601-encoded datetime
+scalar ISO8601DateTime
+
+type Ingredient {
+  id: Int!
+  ingredientGroup: IngredientGroup
+  name: String!
+  number: Int
+  unitOfMeasurement: String
+}
+
+type IngredientGroup {
+  id: Int!
+  ingredients: [Ingredient!]
+  name: String
+}
+
+type Label {
+  id: Int!
+  name: String!
+}
+
+type Mutation {
+  recipeCreate(recipe: RecipeInput!): Recipe
+}
+
+type Query {
+  # A recipe
+  recipe(id: ID!): Recipe
+
+  # Categories of recipes.
+  recipeCategories: [RecipeCategory!]
+
+  # A list of recipes
+  recipes: [Recipe!]
+
+  # Search for different record types
+  search(acceptTypes: [String!]!, queryString: String!): [Searchable!]
+}
+
+type Recipe {
+  calories: Int
+  cookTime: Int
+  createdAt: ISO8601DateTime!
+  datePublished: ISO8601DateTime!
+  description: String
+  id: ID!
+  ingredients: [Ingredient!]
+  instructions: [RecipeInstruction!]
+  labels: [Label!]
+  numberOfServings: Int
+  prepTime: Int
+  recipeCategory: String
+  title: String!
+  totalTime: Int
+  updatedAt: ISO8601DateTime!
+  user: User!
+}
+
+type RecipeCategory {
+  id: Int!
+  labels: [Label!]
+  name: String!
+}
+
+input RecipeInput {
+  calories: Int!
+  cookTime: Int
+  description: String
+  id: Int
+  numberOfServings: Int
+  prepTime: Int
+  recipeCategory: String
+  recipeInstructions: String
+  title: String!
+  totalTime: Int
+}
+
+type RecipeInstruction {
+  body: String!
+  step: Int!
+}
+
+# Objects which may be searched on
+union Searchable = Recipe
+
+type User {
+  firstName: String!
+  lastName: String!
+  name: String!
+}

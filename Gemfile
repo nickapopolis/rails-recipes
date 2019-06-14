@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'webpacker', '~> 3.4'
+gem 'webpacker', '~> 4.0.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -57,3 +57,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'graphiql-rails', group: :development
+
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '6.x'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '6.x'

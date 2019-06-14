@@ -2,21 +2,33 @@ import * as React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reduxThunk, { ThunkMiddleware } from 'redux-thunk';
-import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router';
+import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { blue } from '@material-ui/core/colors';
-import primaryColor from '../lib/primary-color';
+import ApolloClient, { InMemoryCache } from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
 import { createBrowserHistory } from 'history';
-import reducers from '../reducers';
+import createRootReducer from '../reducers';
 import routes from '../routes';
-import '../styles/app';
+import '../src/main.css';
 
 const history = createBrowserHistory();
 const store = createStore(
-	connectRouter(history)(reducers),
-	applyMiddleware(reduxThunk as ThunkMiddleware, routerMiddleware(history)),
+  createRootReducer(history), // root reducer with router state
+  applyMiddleware(
+    reduxThunk as ThunkMiddleware, routerMiddleware(history), // for dispatching history actions
+  ),
 );
 
+const cache = new InMemoryCache();
+
+const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+const client = new ApolloClient({
+  cache,
+  credentials: 'same-origin',
+  headers: {
+    'X-CSRF-Token': csrfToken,
+  },
+});
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -35,13 +47,15 @@ const theme = createMuiTheme({
 });
 const App = () => {
   return (
-		<Provider store={store}>
-			<MuiThemeProvider theme={theme}>
-				<ConnectedRouter history={history}>
-					{ routes }
-				</ConnectedRouter>
-			</MuiThemeProvider>
-		</Provider>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+          <ConnectedRouter history={history}>
+            {routes}
+          </ConnectedRouter>
+        </MuiThemeProvider>
+      </Provider>
+    </ApolloProvider>
   );
 };
 export default App;

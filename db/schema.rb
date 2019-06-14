@@ -10,19 +10,65 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_212723) do
+ActiveRecord::Schema.define(version: 2019_06_12_221219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ingredient_groups", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "ingredients", force: :cascade do |t|
     t.bigint "recipe_id"
     t.string "name"
     t.integer "number"
-    t.string "unitOfMeasurement"
+    t.string "unit_of_measurement"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "ingredient_group_id"
     t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "recipe_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "recipe_category_labels", force: :cascade do |t|
+    t.bigint "label_id"
+    t.bigint "recipe_category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["label_id"], name: "index_recipe_category_labels_on_label_id"
+    t.index ["recipe_category_id"], name: "index_recipe_category_labels_on_recipe_category_id"
+  end
+
+  create_table "recipe_instructions", force: :cascade do |t|
+    t.bigint "recipe_id"
+    t.bigint "step"
+    t.string "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_recipe_instructions_on_recipe_id"
+  end
+
+  create_table "recipe_labels", force: :cascade do |t|
+    t.bigint "recipe_id"
+    t.bigint "label_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["label_id"], name: "index_recipe_labels_on_label_id"
+    t.index ["recipe_id"], name: "index_recipe_labels_on_recipe_id"
   end
 
   create_table "recipeimages", force: :cascade do |t|
@@ -34,15 +80,15 @@ ActiveRecord::Schema.define(version: 2018_05_16_212723) do
 
   create_table "recipes", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "cookTime"
-    t.date "datePublished"
+    t.integer "cook_time"
+    t.date "date_published"
     t.string "description"
     t.integer "calories"
-    t.integer "prepTime"
-    t.string "recipeCategory"
-    t.string "recipeInstructions"
-    t.integer "numberOfServings"
-    t.integer "totalTime"
+    t.integer "prep_time"
+    t.string "recipe_category"
+    t.integer "number_of_servings"
+    t.integer "total_time"
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_recipes_on_user_id"
@@ -55,7 +101,13 @@ ActiveRecord::Schema.define(version: 2018_05_16_212723) do
     t.index ["recipe_id"], name: "index_reviews_on_recipe_id"
   end
 
+  create_table "test", id: false, force: :cascade do |t|
+    t.string "name", limit: 255
+  end
+
   create_table "users", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
@@ -73,6 +125,11 @@ ActiveRecord::Schema.define(version: 2018_05_16_212723) do
   end
 
   add_foreign_key "ingredients", "recipes"
+  add_foreign_key "recipe_category_labels", "labels"
+  add_foreign_key "recipe_category_labels", "recipe_categories"
+  add_foreign_key "recipe_instructions", "recipes"
+  add_foreign_key "recipe_labels", "labels"
+  add_foreign_key "recipe_labels", "recipes"
   add_foreign_key "recipeimages", "recipes"
   add_foreign_key "recipes", "users"
   add_foreign_key "reviews", "recipes"

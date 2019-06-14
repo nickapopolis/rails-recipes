@@ -4,7 +4,7 @@ class CreateIngredients < ActiveRecord::Migration[5.1]
       t.belongs_to :recipe, foreign_key: true
       t.string :name
       t.integer :number
-      t.string :unitOfMeasurement
+      t.string :unit_of_measurement
 
       t.timestamps
     end

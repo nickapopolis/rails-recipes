@@ -5,6 +5,10 @@ import {
     faSearch,
     faPlus,
     faCloudUploadAlt,
+    faHome,
+    faBook,
+    faThumbsUp,
+    faThumbsDown,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -12,6 +16,10 @@ library.add(
     faSearch,
     faPlus,
     faCloudUploadAlt,
+    faHome,
+    faBook,
+    faThumbsUp,
+    faThumbsDown,
 );
 
 dom.watch();

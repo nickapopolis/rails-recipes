@@ -13,22 +13,22 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import classNames from 'classnames';
-import SearchBox from './SearchBox';
+import SearchBox from './components/SearchBox';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    flexGrow: 1,
-    height: '100%',
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
+    // flexGrow: 1,
+    // height: '100%',
+    // zIndex: 1,
+    // overflow: 'hidden',
+    // position: 'relative',
     display: 'flex',
-    width: '100%',
+    // width: '100%',
   },
   appBar: {
-    position: 'absolute',
     zIndex: theme.zIndex.drawer + 1,
   },
   navIconHide: {
@@ -49,20 +49,39 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   icon: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   toolbar: theme.mixins.toolbar,
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
   drawerPaper: {
     width: drawerWidth,
-    [theme.breakpoints.up('md')]: {
-      position: 'relative',
-    },
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
   },
+  listItemLink: {
+    width: '100%',
+    textDecoration: 'none',
+    display: 'flex',
+    position: 'relative',
+    boxSizing: 'border-box',
+    textAlign: 'left',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  listItemText: {
+    fontSize: '0.9rem',
+    color: theme.palette.text.primary,
+    marginBottom: theme.spacing(0.25),
+  },
+  listItemIcon: {
+    transform: 'scale(0.8)',
+    minWidth: '45px',
+  }
 });
 interface MenuProps extends WithStyles<typeof styles>{
 }
@@ -84,16 +103,36 @@ const MenuAppBar = withStyles(styles)(
           <div className={classes.toolbar} />
           <List>
             <ListItem button>
-              <ListItemIcon>
-                <Icon className={classNames('fa fa-plus')} />
-              </ListItemIcon>
-              <ListItemText primary="Add" />
+              <Link className={classes.listItemLink} to={'/'}>
+                <ListItemIcon>
+                  <Icon className={classNames('fa fa-home', classes.listItemIcon)} />
+                </ListItemIcon>
+                <ListItemText className={classes.listItemText} primary="Home" />
+              </Link>
             </ListItem>
             <ListItem button>
-              <ListItemIcon>
-                <Icon className={classNames('fa fa-utensils')} />
-              </ListItemIcon>
-              <ListItemText primary="Recipes" />
+              <Link className={classes.listItemLink} to={'/recipes/new'}>
+                <ListItemIcon>
+                  <Icon className={classNames('fa fa-plus', classes.listItemIcon)} />
+                </ListItemIcon>
+                <ListItemText className={classes.listItemText} primary="Add" />
+              </Link>
+            </ListItem>
+            <ListItem button>
+              <Link className={classes.listItemLink} to={'/recipes'}>
+                <ListItemIcon>
+                  <Icon className={classNames('fa fa-utensils fa-xs', classes.listItemIcon)} />
+                </ListItemIcon>
+                <ListItemText className={classes.listItemText} primary="Browse" />
+              </Link>
+            </ListItem>
+            <ListItem button>
+              <Link className={classes.listItemLink} to={'/my_recipes'}>
+                <ListItemIcon>
+                  <Icon className={classNames('fa fa-book', classes.listItemIcon)} />
+                </ListItemIcon>
+                <ListItemText className={classes.listItemText} primary="My Recipes" />
+              </Link>
             </ListItem>
           </List>
         </div>
@@ -119,6 +158,7 @@ const MenuAppBar = withStyles(styles)(
           </AppBar>
           <Hidden mdUp>
             <Drawer
+              className={classes.drawer}
               variant="temporary"
               anchor="left"
               open={this.state.mobileOpen}
@@ -135,6 +175,7 @@ const MenuAppBar = withStyles(styles)(
           </Hidden>
           <Hidden smDown implementation="css">
             <Drawer
+              className={classes.drawer}
               variant="permanent"
               open
               classes={{
