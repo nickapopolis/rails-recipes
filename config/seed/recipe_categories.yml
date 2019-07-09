@@ -1,0 +1,56 @@
+meal_type:
+  name: 'Meal Type'
+  labels:
+    - appetizers_snacks
+    - breakfast_brunch
+    - desserts
+    - dinner
+    - drinks
+ingredient:
+  name: 'Ingredient'
+  labels:
+    - beef
+    - chicken
+    - pasta
+    - pork
+    - salmon
+diet_health:
+  name: 'Diet & Health'
+  labels:
+    - diabetic
+    - gluten_free
+    - healthy
+    - low_calorie
+    - low_fat
+seasonal:
+  name: 'Seasonal'
+  labels:
+    - fathers_day
+    - 4th_of_july
+    - entertaining
+    - summer_recipes
+    - more_holidays_events
+dish_type:
+  name: 'Dish Type'
+  labels:
+    - breads
+    - cakes
+    - salads
+    - smoothies
+    - soups_stews_chili
+cooking_style:
+  name: 'Cooking Style'
+  labels:
+    - bbq_grilling
+    - quick_easy
+    - slow_cooker
+    - vegan
+    - vegetarian
+world_cuisine:
+  name: 'World Cuisine'
+  labels: 
+    - asian
+    - indian
+    - italian
+    - mexican
+    - southern

@@ -4,6 +4,12 @@ class Recipe < ApplicationRecord
 	include Elasticsearch::Model
 	include Elasticsearch::Model::Callbacks
 
+	validates :cook_time, presence: true
+	validates :description, presence: true
+	validates :number_of_servings, presence: true
+	validates :total_time, presence: true
+	validates :title, presence: true
+
     document_type "Recipe"
 
 	settings index: { number_of_shards: 1 } do
@@ -26,10 +32,12 @@ class Recipe < ApplicationRecord
 	
 
 	belongs_to :user
-	has_many :ingredients, dependent: :destroy
+	has_many :ingredients, dependent: :destroy, through: :ingredient_groups
 	has_many :recipeimages, dependent: :destroy 
 	has_many :reviews, dependent: :destroy
 	has_many :recipe_labels, dependent: :destroy
 	has_many :labels, through: :recipe_labels
 	has_many :instructions, dependent: :destroy, class_name: 'RecipeInstruction'
+  has_many :ingredient_groups, dependent: :destroy
+	has_many_attached :images
 end

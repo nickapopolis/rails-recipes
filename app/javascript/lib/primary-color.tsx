@@ -1,19 +1,19 @@
 
 const primaryColor = {
-  50: '#F1F8E9',
-  100: '#DCEDC9',
-  200: '#C5E1A5',
-  300: '#AED580',
-  400: '#9CCC65',
-  500: '#8BC34A',
-  600: '#83BD43',
-  700: '#78B53A',
-  800: '#6EAE32',
-  900: '#5BA122',
-  A100: '#EBFFDD',
-  A200: '#CEFFAA',
-  A400: '#B0FF77',
-  A700: '#A2FF5D',
+  50: '#EBFAF2',
+  100: '#CDF2DF',
+  200: '#ACEACA',
+  300: '#8BE1B5',
+  400: '#72DAA5',
+  500: '#59D495',
+  600: '#51CF8D',
+  700: '#48C982',
+  800: '#3EC378',
+  900: '#2EB967',
+  A100: '#FCFFFD',
+  A200: '#C9FFDE',
+  A400: '#96FFBF',
+  A700: '#7DFFAF',
 };
 
 export default primaryColor;

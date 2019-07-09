@@ -1,18 +1,17 @@
 import * as React from 'react';
-import Icon from '@material-ui/core/Icon';
 import {
-  WithStyles,
-  createStyles,
-  withStyles,
   Theme,
   Typography,
   Chip
 } from '@material-ui/core';
-import classNames from 'classnames';
-import RecipeImages from './RecipeImages';
-import { mergeClasses } from '@material-ui/styles';
+import {
+  makeStyles,
+  createStyles,
+} from '@material-ui/styles';
+import * as _ from 'lodash';
+import {RecipeForm}  from '../../RecipeNew/forms/RecipeForm';
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     display: 'flex',
     flexDirection: 'row',
@@ -44,75 +43,90 @@ const styles = (theme: Theme) => createStyles({
       paddingLeft: 0
     }
   },
-});
-interface RecipeHeaderProps extends WithStyles<typeof styles>{
-  title?: string;
-  authorName?: string;
-  description?: string;
-  totalCookingTime?: number;
-  servings?: number;
-  calories?: number;
-  percentageLikes?: string;
+  image: {
+    objectFit: 'cover',
+    width: '250px',
+    height: '250px',
+  },
+  imageContainer: {
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(3),
+  }
+}));
+
+interface StatsTextProps{
+  children?: any;
 }
-const StatsText = ({children, className}) => <Typography
-    className={className}
+interface RecipeHeaderProps{
+  recipe: RecipeForm;
+}
+
+export default function RecipeHeader(props: RecipeHeaderProps){
+  const classes = useStyles({});
+  const { recipe } = props;
+  const { images } = recipe;
+
+  const title = (
+    <Typography className={classes.informationText} variant="h4">
+      {recipe.title}
+    </Typography>
+  );
+
+  const author = (
+    <Typography className={classes.informationText} variant="caption">
+      {recipe.user.name}
+    </Typography>
+  );
+
+  const description = (
+    <Typography className={classes.informationText} variant="body2">
+      {recipe.description}
+    </Typography>);
+
+  const StatsText = ({children}: StatsTextProps) => <Typography
+    className={classes.statsText}
     variant="overline" >
     {children}
-</Typography>
+  </Typography>
 
-const RecipeHeader = withStyles(styles)(
-  class extends React.Component<RecipeHeaderProps, {}> {
-    render() {
-      const { classes } = this.props;
-
-      const title = (
-        <Typography className={classes.informationText} variant="h4">
-          {this.props.title}
-        </Typography>
-      );
-
-      const author = (
-        <Typography className={classes.informationText} variant="caption">
-          {this.props.authorName}
-        </Typography>
-      );
-
-      const description = (
-        <Typography className={classes.informationText} variant="body2">
-          {this.props.description}
-        </Typography>);
-
-
-      return (
-        <div className={classes.root}>
-          {/* <RecipeImages className={classes.recipeImages}/> */}
-          <div className={classes.informationContainer}>
-            {title}
-            <div className={classes.statsContainer}>
-              <StatsText className={classes.statsText}>
-                liked this
-                <Chip label={this.props.percentageLikes} />
-              </StatsText>
-              <StatsText className={classes.statsText}>
-                total cooking time
-                <Chip label={`${this.props.totalCookingTime} minutes` } />
-              </StatsText>
-              <StatsText className={classes.statsText}>
-                servings
-                <Chip label={this.props.servings} />
-              </StatsText>
-              <StatsText className={classes.statsText}>
-                calories
-                <Chip label={this.props.calories} />
-              </StatsText>
-            </div>
-            {author}
-            {description}
-          </div>
+  return (
+    <div className={classes.root}>
+      {/* <RecipeImages className={classes.recipeImages}/> */}
+      {images && !_.isEmpty(images) && <div className={classes.imageContainer}>
+          <img className={classes.image} src={images[0]}/>
         </div>
-      );
-    }
-  },
-);
-
-export default RecipeHeader;
+      }
+      <div className={classes.informationContainer}>
+        {title}
+        <div className={classes.statsContainer}>
+          <StatsText>
+            liked this
+            <Chip label="90%" />
+          </StatsText>
+          <StatsText>
+            prep time
+            <Chip label={`${recipe.prepTime} minutes` } />
+          </StatsText>
+          <StatsText>
+            cooking time
+            <Chip label={`${recipe.cookTime} minutes` } />
+          </StatsText>
+          <StatsText>
+            total time
+            <Chip label={`${recipe.totalTime} minutes` } />
+          </StatsText>
+          <StatsText>
+            servings
+            <Chip label={recipe.numberOfServings} />
+          </StatsText>
+          <StatsText>
+            calories
+            <Chip label={recipe.calories} />
+          </StatsText>
+        </div>
+        {author}
+        {description}
+      </div>
+    </div>
+  );
+}

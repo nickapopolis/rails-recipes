@@ -7,9 +7,10 @@ module Types
         argument :id, Int, required: false
         argument :number_of_servings, Int, required: false
         argument :prep_time, Int, required: false
-        argument :recipe_category, String, required: false
-        argument :recipe_instructions, String, required: false
         argument :total_time, Int, required: false
-        argument :title, String, required: true
+        argument :instructions, [Types::RecipeInstructionInput], required: false
+        argument :ingredients, [Types::RecipeIngredientInput], required: false
+        argument :labels, [Types::RecipeLabelInput], required: false
+        argument :images, [String], required: false
     end
 end

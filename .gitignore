@@ -30,3 +30,12 @@ yarn-debug.log*
 .env
 /public/assets
 /public/packs
+/storage
+
+tfvars.json
+terraform.tfstate.backup
+terraform.tfstate
+tasteful_recipes
+tasteful_recipes.pub
+.terraform
+.DS_Store

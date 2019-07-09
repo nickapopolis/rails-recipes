@@ -9,6 +9,8 @@ import {
     faBook,
     faThumbsUp,
     faThumbsDown,
+    faTimesCircle,
+    faSave,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -20,6 +22,8 @@ library.add(
     faBook,
     faThumbsUp,
     faThumbsDown,
+    faTimesCircle,
+    faSave,
 );
 
 dom.watch();

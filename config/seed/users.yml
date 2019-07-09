@@ -1,0 +1,6 @@
+nick_tierney:
+  id: 1
+  first_name: 'Nick'
+  last_name: 'Tierney'
+  email: 'test@test.com'
+  password: '123456'

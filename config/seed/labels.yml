@@ -1,0 +1,70 @@
+appetizers_snacks:
+  name: 'Appetizers & Snacks'
+breakfast_brunch:
+  name: 'Breakfast & Brunch'
+desserts:
+  name: 'Desserts'
+dinner:
+  name: 'Dinner'
+drinks:
+  name: 'Drinks'
+beef:
+  name: 'Beef'
+chicken:
+  name: 'Chicken'
+pasta:
+  name: 'Pasta'
+pork:
+  name: 'Pork'
+salmon:
+  name: 'Salmon'
+diabetic:
+  name: 'Diabetic'
+gluten_free:
+  name: 'Gluten Free'
+healthy:
+  name: 'Healthy'
+low_calorie:
+  name: 'Low Calorie'
+low_fat:
+  name: 'Low Fat'
+fathers_day:
+  name: 'Father’s Day'
+4th_of_july:
+  name: '4th of July'
+entertaining:
+  name: 'Entertaining'
+summer_recipes:
+  name: 'Summer Recipes'
+more_holidays_events:
+  name: 'More Holidays & Events'
+breads:
+  name: 'Breads'
+cakes:
+  name: 'Cakes'
+salads:
+  name: 'Salads'
+smoothies:
+  name: 'Smoothies'
+soups_stews_chili:
+  name: 'Soups, Stews & Chili'
+bbq_grilling:
+  name: 'BBQ & Grilling'
+quick_easy:
+  name: 'Quick & Easy'
+slow_cooker:
+  name: 'Slow Cooker'
+vegan:
+  name: 'Vegan'
+vegetarian:
+  name: 'Vegetarian'
+asian:
+  name: 'Asian'
+indian:
+  name: 'Indian'
+italian:
+  name: 'Italian'
+mexican:
+  name: 'Mexican'
+southern:
+  name: 'Southern'

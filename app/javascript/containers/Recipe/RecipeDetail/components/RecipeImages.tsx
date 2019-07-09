@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import Icon from '@material-ui/core/Icon';
 import { WithStyles, createStyles, withStyles, Theme, Typography } from '@material-ui/core';
 import classNames from 'classnames';
@@ -25,13 +24,13 @@ const styles = (theme: Theme) => createStyles({
     fontSize: '4em',
   },
 });
-interface RecipeImagesProps extends WithStyles<typeof styles>, InjectedFormProps{
+interface RecipeImagesProps extends WithStyles<typeof styles>{
 
 }
 const RecipeImages = withStyles(styles)(
   class extends React.Component<RecipeImagesProps, {}> {
     render() {
-      const { handleSubmit, classes } = this.props;
+      const { classes } = this.props;
       const uploader = (
         <div className={classes.uploader}>
           <Icon className={classNames(classes.photoIcon, 'fa fa-cloud-upload-alt')}/>
@@ -47,6 +46,4 @@ const RecipeImages = withStyles(styles)(
   },
 );
 
-export default reduxForm({
-  form: 'recipe',
-})(RecipeImages);
+RecipeImages;

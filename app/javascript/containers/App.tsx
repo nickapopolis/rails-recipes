@@ -32,9 +32,9 @@ const client = new ApolloClient({
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#bef67a',
-      main: '#8bc34a',
-      dark: '#5a9216',
+      light: '#8effc6',
+      main: '#59d495',
+      dark: '#16a267',
       contrastText: '#000000',
     },
     secondary: {
@@ -45,6 +45,7 @@ const theme = createMuiTheme({
     },
   },
 });
+
 const App = () => {
   return (
     <ApolloProvider client={client}>

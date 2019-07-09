@@ -3,11 +3,10 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
   post "/graphql", to: "graphql#execute"
-  resources :reviews
-  resources :recipeimages
-  resources :ingredients
   devise_for :users
-  resources :recipes
+
+  resources :recipes, only: %i(index show edit), to: "pages#index"
+  get "/my_recipes", to: "pages#index"
   root to: "pages#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

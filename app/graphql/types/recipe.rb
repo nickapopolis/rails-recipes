@@ -18,6 +18,15 @@ module Types
         field :title, String, null: false
         field :labels, [Types::Label], null: true
         field :ingredients, [Types::Ingredient], null: true
+        field :ingredient_groups, [Types::IngredientGroup], null: true
+        field :images, [String], null: true
+        
+        
+        def images
+            object.images.map do |image|
+                Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
+            end
+        end
 
         def user
             ::User.find(object.user_id)

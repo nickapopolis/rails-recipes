@@ -4,23 +4,19 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 
 import {
-    WithStyles,
-    createStyles,
-    withStyles,
-    Theme,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-    TableHead,
+  Card,
+  Typography,
+  Theme,
+  CardActionArea,
 } from '@material-ui/core';
 
-const styles = (theme: Theme) => createStyles({
-});
-interface MyRecipesIndexProps extends WithStyles<typeof styles> {
+import {
+  makeStyles,
+  createStyles,
+} from '@material-ui/styles';
 
-}
+import * as _ from 'lodash';
+
 const GET_RECIPES = gql`
   {
     recipes{
@@ -30,6 +26,7 @@ const GET_RECIPES = gql`
       cookTime
       id
       numberOfServings
+      images
       user{
         name
       }
@@ -37,44 +34,55 @@ const GET_RECIPES = gql`
   }
 `;
 
-const MyRecipesIndex = withStyles(styles)(
-    class extends React.Component<MyRecipesIndexProps, {}> {
-      recipeLink(recipe) {
-        return `/recipes/${recipe.id}`;
-      }
-      render() {
-        return (
-                <Query query={GET_RECIPES}>
-                    {({ data, loading }) => {
-                      if (loading || !data) {
-                        return null;
-                      }
-                      const { recipes } = data;
-                      return <Paper>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Title</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {recipes.map((recipe) => {
-                                      return <TableRow key={recipe.id}>
-                                            <TableCell key={'title'}>
-                                                <Link to={this.recipeLink(recipe)}>
-                                                    {recipe.title}
-                                                </Link>
-                                            </TableCell>
-                                        </TableRow>;
-                                    })}
-                                </TableBody>
-                            </Table>
-                        </Paper>;
-                    }}
-                </Query>
-        );
-      }
-    },
-);
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  image: {
+    objectFit: 'cover',
+    width: '70px',
+    height: '70px',
+  },
+  link: {
+    textDecoration: 'none',
+  },
+  card: {
+    margin: theme.spacing(1),
+  },
+  cardActionArea: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  text: {
+    padding: theme.spacing(1),
+  }
+})); 
 
-export default MyRecipesIndex;
+export default function MyRecipesIndex() {
+  const classes = useStyles({});
+  function recipeLink(recipe) {
+    return `/recipes/${recipe.id}`;
+  }
+
+  return (
+    <Query query={GET_RECIPES}>
+      {({ data, loading }) => {
+        if (loading || !data) {
+          return null;
+        }
+        const { recipes } = data;
+        {return recipes.map((recipe) => {
+          return <Link className={classes.link} key={recipe.id} to={recipeLink(recipe)}>
+            <Card className={classes.card}>
+              <CardActionArea className={classes.cardActionArea}>
+                {recipe.images && !_.isEmpty(recipe.images) && <img className={classes.image} src={recipe.images[0]}/>}
+                <div className={classes.text}>
+                  <Typography>{recipe.title}</Typography>
+                </div>
+              </CardActionArea>
+            </Card>
+          </Link>
+        })}
+      }}
+    </Query>
+  );
+}
+

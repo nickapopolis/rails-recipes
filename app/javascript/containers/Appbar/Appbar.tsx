@@ -1,50 +1,40 @@
 import * as React from 'react';
-import { WithStyles, createStyles, withStyles, Theme, Typography } from '@material-ui/core';
-import AppBar from '@material-ui/core/AppBar';
-import Drawer from '@material-ui/core/Drawer';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
+import {
+  Theme,
+  makeStyles,
+  createStyles,
+} from '@material-ui/core/styles';
+import {
+  AppBar,
+  Drawer,
+  Toolbar,
+  IconButton,
+  Hidden,
+  Icon,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  CssBaseline
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Hidden from '@material-ui/core/Hidden';
-import Divider from '@material-ui/core/Divider';
-import Icon from '@material-ui/core/Icon';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import classNames from 'classnames';
-import SearchBox from './components/SearchBox';
 import { Link } from 'react-router-dom';
+import * as _ from 'lodash';
+import SearchBox from './components/SearchBox';
 
 const drawerWidth = 240;
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
-    // flexGrow: 1,
-    // height: '100%',
-    // zIndex: 1,
-    // overflow: 'hidden',
-    // position: 'relative',
     display: 'flex',
-    // width: '100%',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
   navIconHide: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-  navBrandHide: {
-    minWidth: drawerWidth,
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-  },
-  navProfileHide: {
-    minWidth: '100px',
-    [theme.breakpoints.down('sm')]: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
   },
@@ -52,9 +42,17 @@ const styles = (theme: Theme) => createStyles({
     margin: theme.spacing(1),
   },
   toolbar: theme.mixins.toolbar,
+  toolbarCustom: {
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: drawerWidth
+    },
+    minHeight: '56px',
+  },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
   drawerPaper: {
     width: drawerWidth,
@@ -81,116 +79,98 @@ const styles = (theme: Theme) => createStyles({
   listItemIcon: {
     transform: 'scale(0.8)',
     minWidth: '45px',
+  },
+}));
+
+interface MenuProps{
+  children?: React.ReactNode;
+}
+
+interface NavLinkProps{
+  uri?: string;
+  iconKey?: string;
+  text?: string;
+}
+
+export default function MenuAppBar(props: MenuProps) {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const classes = useStyles({});
+
+  function handleDrawerToggle() {
+    setMobileOpen(!mobileOpen);
   }
-});
-interface MenuProps extends WithStyles<typeof styles>{
+
+  function NavLink(props: NavLinkProps){
+    return <ListItem button>
+      <Link className={classes.listItemLink} to={props.uri}>
+        <ListItemIcon>
+          <Icon className={classNames(props.iconKey, classes.listItemIcon)} />
+        </ListItemIcon>
+        <ListItemText className={classes.listItemText} primary={props.text} />
+      </Link>
+    </ListItem>
+  }
+
+  const drawer = (
+    <div>
+      <div className={classes.toolbar} />
+      <List>
+        <NavLink uri='/' iconKey='fa fa-home' text="Home"/>
+        <NavLink uri='/recipes/new' iconKey='fa fa-plus' text="Add"/>
+        <NavLink uri='/recipes' iconKey='fa fa-utensils fa-xs' text="Browse"/>
+        <NavLink uri='/my_recipes' iconKey='fa fa-book' text="My Recipes"/>
+      </List>
+    </div>
+  );
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar className={classes.appBar}>
+        <Toolbar className={classes.toolbarCustom}>
+          <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={handleDrawerToggle}
+            className={classes.navIconHide}
+          >
+            <MenuIcon />
+          </IconButton>
+          <SearchBox/>
+        </Toolbar>
+      </AppBar>
+      <nav className={classes.drawer} aria-label="Mailbox folders">
+        <Hidden smUp implementation="css">
+          <Drawer
+            variant="temporary"
+            anchor="left"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            variant="permanent"
+            open
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+      </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {props.children}
+      </main>
+    </div>
+  );
 }
-interface MenuState{
-  mobileOpen?: boolean;
-}
-const MenuAppBar = withStyles(styles)(
-  class extends React.Component<MenuProps, MenuState> {
-    state = {
-      mobileOpen: false,
-    };
-    handleDrawerToggle = () => {
-      this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-    }
-    render() {
-      const { classes } = this.props;
-      const drawer = (
-        <div>
-          <div className={classes.toolbar} />
-          <List>
-            <ListItem button>
-              <Link className={classes.listItemLink} to={'/'}>
-                <ListItemIcon>
-                  <Icon className={classNames('fa fa-home', classes.listItemIcon)} />
-                </ListItemIcon>
-                <ListItemText className={classes.listItemText} primary="Home" />
-              </Link>
-            </ListItem>
-            <ListItem button>
-              <Link className={classes.listItemLink} to={'/recipes/new'}>
-                <ListItemIcon>
-                  <Icon className={classNames('fa fa-plus', classes.listItemIcon)} />
-                </ListItemIcon>
-                <ListItemText className={classes.listItemText} primary="Add" />
-              </Link>
-            </ListItem>
-            <ListItem button>
-              <Link className={classes.listItemLink} to={'/recipes'}>
-                <ListItemIcon>
-                  <Icon className={classNames('fa fa-utensils fa-xs', classes.listItemIcon)} />
-                </ListItemIcon>
-                <ListItemText className={classes.listItemText} primary="Browse" />
-              </Link>
-            </ListItem>
-            <ListItem button>
-              <Link className={classes.listItemLink} to={'/my_recipes'}>
-                <ListItemIcon>
-                  <Icon className={classNames('fa fa-book', classes.listItemIcon)} />
-                </ListItemIcon>
-                <ListItemText className={classes.listItemText} primary="My Recipes" />
-              </Link>
-            </ListItem>
-          </List>
-        </div>
-      );
-      return (
-        <div className={classes.root}>
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="Open drawer"
-                onClick={this.handleDrawerToggle}
-                className={classes.navIconHide}
-              >
-                <MenuIcon />
-              </IconButton>
-              <div className={classes.navBrandHide}>
-              </div>
-              <SearchBox/>
-              <div className={classes.navProfileHide}>
-              </div>
-            </Toolbar>
-          </AppBar>
-          <Hidden mdUp>
-            <Drawer
-              className={classes.drawer}
-              variant="temporary"
-              anchor="left"
-              open={this.state.mobileOpen}
-              onClose={this.handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <Hidden smDown implementation="css">
-            <Drawer
-              className={classes.drawer}
-              variant="permanent"
-              open
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            {this.props.children}
-          </main>
-        </div>
-      );
-    }
-  });
-export default MenuAppBar;
