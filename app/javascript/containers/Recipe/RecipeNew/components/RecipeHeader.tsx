@@ -3,11 +3,11 @@ import { Theme, TextField } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import RecipeImages from './RecipeImages';
 import { RecipeForm } from '../forms/RecipeForm';
-import { FormDetails } from '@shopify/react-form-state';
-
+import { FormDetails, FieldDescriptor } from '@shopify/react-form-state';
+import * as _ from 'lodash';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-    root: {
+  root: {
       display: 'flex',
       flexDirection: 'row',
       width: '100%',
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         flexDirection: 'column',
       },
     },
-    informationContainer: {
+  informationContainer: {
       marginLeft: theme.spacing(2),
       [theme.breakpoints.down('xs')]: {
         marginLeft: 0,
@@ -24,33 +24,33 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       display: 'flex',
       flexDirection: 'column',
     },
-    informationText: {
+  informationText: {
       marginBottom: theme.spacing(0.5),
     },
-    statsText: {
+  statsText: {
       marginBottom: theme.spacing(0.5),
       color: theme.palette.primary.dark,
     },
-    statsContainer: {
+  statsContainer: {
       display: 'flex',
       flexDirection: 'row',
       [theme.breakpoints.down('xs')]: {
         flexDirection: 'column',
       },
     },
-    textField: {
+  textField: {
       margin: theme.spacing(1),
       [theme.breakpoints.down('xs')]: {
         marginLeft: 0,
         marginRight: 0,
       },
     },
-    imagesContainer: {
+  imagesContainer: {
       [theme.breakpoints.up('sm')]: {
         marginTop: theme.spacing(1),
       },
-    }
-  }),
+    },
+}),
 );
 interface RecipeHeaderProps{
   formDetails?: FormDetails<RecipeForm>;
@@ -68,32 +68,46 @@ export default function RecipeHeader(props: RecipeHeaderProps) {
     description,
   } = fields;
 
+  function withField<T>(field:FieldDescriptor<T>) {
+    return {
+      error: !!field.error,
+      value: field.value || '',
+      onChange({ currentTarget }) {
+        field.onChange(currentTarget.value);
+      },
+      onBlur: field.onBlur,
+      id: field.name,
+    };
+  }
+
+  function withIntField(field:FieldDescriptor<number>) {
+    return {
+      ...withField(field),
+      value: field.value || '',
+      onChange({ currentTarget }) {
+        const intValue = parseInt(currentTarget.value, 10);
+        field.onChange(_.isNaN(intValue) ? null : intValue);
+      },
+    };
+  }
+
   const titleField = (<TextField
-    {...title}
-    id={title.name}
+    {...withField(title)}
     className={classes.textField}
     label="Title"
     variant="outlined"
-    onChange={({ currentTarget }) => {
-      title.onChange(currentTarget.value);
-    }}
   />);
 
   const prepTimeField = (<TextField
-    {...prepTime}
-    id={prepTime.name}
+    {...withIntField(prepTime)}
     className={classes.textField}
     label="Prep time"
     type="number"
     variant="outlined"
-    onChange={({ currentTarget }) => {
-      prepTime.onChange(parseInt(currentTarget.value, 10));
-    }}
   />);
 
   const totalCookingTimeField = (<TextField
-    {...cookTime}
-    id={cookTime.name}
+    {...withIntField(cookTime)}
     className={classes.textField}
     label="Total cooking time"
     type="number"
@@ -104,7 +118,7 @@ export default function RecipeHeader(props: RecipeHeaderProps) {
   />);
 
   const servingsField = (<TextField
-    {...numberOfServings}
+    {...withIntField(numberOfServings)}
     id={numberOfServings.name}
     className={classes.textField}
     label="Number of servings"
@@ -116,8 +130,7 @@ export default function RecipeHeader(props: RecipeHeaderProps) {
   />);
 
   const caloriesField = (<TextField
-    {...calories}
-    id={calories.name}
+    {...withIntField(calories)}
     className={classes.textField}
     label="Calories"
     type="number"
@@ -128,22 +141,18 @@ export default function RecipeHeader(props: RecipeHeaderProps) {
   />);
 
   const descriptionField = (<TextField
-    {...description}
-    id={description.name}
+    {...withField(description)}
     className={classes.textField}
     label="Description"
     variant="outlined"
     multiline
-    onChange={({ currentTarget }) => {
-      description.onChange(currentTarget.value);
-    }}
   />);
 
   return (
     <div className={classes.root}>
-      <div className={classes.imagesContainer}>
-        <RecipeImages/>
-      </div>
+      {/* <div className={classes.imagesContainer}>
+        <RecipeImages formDetails={formDetails}/>
+      </div> */}
       <div className={classes.informationContainer}>
         {titleField}
         <div className={classes.statsContainer}>

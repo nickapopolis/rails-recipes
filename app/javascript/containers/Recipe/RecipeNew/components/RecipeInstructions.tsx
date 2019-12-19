@@ -10,21 +10,21 @@ import {
   StepIcon,
   TextField,
   Icon,
-  Fab
+  Fab,
 } from '@material-ui/core';
 import {
   makeStyles,
   createStyles,
 } from '@material-ui/styles';
 import { RecipeForm, RecipeInstruction } from '../forms/RecipeForm';
-import { FormDetails} from '@shopify/react-form-state';
+import { FormDetails } from '@shopify/react-form-state';
 import * as _ from 'lodash';
-import {replace } from '../../../../lib/utilities';
+import { replace } from '../../../../lib/utilities';
 import classNames from 'classnames';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   stepperBodyField: {
-    width: '100%'
+    width: '100%',
   },
   sectionTitle: {
     marginLeft: theme.spacing(4),
@@ -35,16 +35,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   addButton: {
     marginLeft: '-8px',
-    color: 'white'
+    color: 'white',
   },
   addButtonIcon: {
     transform: 'scale(0.65)',
-  }
+  },
 }));
 interface RecipeInstructionsProps{
   formDetails?: FormDetails<RecipeForm>;
 }
-export default function RecipeInstructions(props:RecipeInstructionsProps){
+export default function RecipeInstructions(props:RecipeInstructionsProps) {
   const classes = useStyles({});
   const { formDetails } = props;
   const { fields } = formDetails;
@@ -55,29 +55,29 @@ export default function RecipeInstructions(props:RecipeInstructionsProps){
     const instructionFieldValue = fieldValues[field];
     const initialFieldValue = instructions.initialValue[index] && instructions.initialValue[index][field];
     return {
-      dirty: instructions.dirty,
-      value: instructionFieldValue,
+      value: instructionFieldValue || '',
       initialvalue: initialFieldValue,
-      onChange(event){
+      onChange(event) {
         const newInstructionValue = {
           ...fieldValues,
           [field]: event.target.value,
-        }
+        };
         instructions.onChange(replace(instructions.value, index, newInstructionValue));
-      }
+      },
     };
   }
 
-  function newInstruction(): RecipeInstruction{
+  function newInstruction(): RecipeInstruction {
     return {
-      body: ''
-    }
+      body: '',
+      step: instructions.value.length,
+    };
   }
 
   return <Paper className={classes.paper}>
     <Typography className={classes.sectionTitle} variant="h5">Instructions</Typography>
     <Stepper activeStep={instructions.value.length - 1} orientation="vertical">
-      {instructions.value.map((value, index)=>{
+      {instructions.value.map((value, index) => {
         return <Step key={index} completed={false} active={true}>
           <StepLabel active={false}>Step {index + 1}</StepLabel>
           <StepContent>
@@ -88,9 +88,9 @@ export default function RecipeInstructions(props:RecipeInstructionsProps){
               variant="outlined"
             />
           </StepContent>
-        </Step>
+        </Step>;
       })}
-      <Step completed={false} active={true} onClick={()=>{instructions.onChange([...instructions.value, newInstruction()])}}>
+      <Step completed={false} active={true} onClick={() => {instructions.onChange([...instructions.value, newInstruction()]);}}>
         <StepIcon icon={
           <Fab size="small" color="primary" aria-label="Add" className={classes.addButton}>
             <Icon className={classNames('fa fa-plus fa-xs', classes.addButtonIcon)}/>
@@ -99,6 +99,5 @@ export default function RecipeInstructions(props:RecipeInstructionsProps){
         </StepIcon>
       </Step>
     </Stepper>
-  </Paper>
+  </Paper>;
 }
-

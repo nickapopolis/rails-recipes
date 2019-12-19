@@ -1,22 +1,29 @@
 import * as React from 'react';
-import FormState from '@shopify/react-form-state';
+import FormState, { FormDetails, validate, validators } from '@shopify/react-form-state';
 import RecipeHeader from './components/RecipeHeader';
 import { RecipeForm } from './forms/RecipeForm';
 import RecipeInstructions from './components/RecipeInstructions';
 import RecipeIngredients from './components/RecipeIngredients';
+import RecipeAppBar from './components/RecipeAppBar';
 import {
   Icon,
-  Fab,
   Theme,
+  Button,
+  AppBar,
+  Toolbar,
+  Snackbar,
+  SnackbarContent,
 } from '@material-ui/core';
 import {
   makeStyles,
   createStyles,
 } from '@material-ui/styles';
-import {Mutation} from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import classNames from 'classnames';
 import * as _ from 'lodash';
+import { ErrorContext } from '../../components/ErrorContext';
+import { ApolloError } from 'apollo-client';
 
 const CREATE_RECIPE = gql`
   mutation CreateRecipe($input: RecipeCreateInput!) {
@@ -29,14 +36,16 @@ const CREATE_RECIPE = gql`
         numberOfServings
         images
         user{
-          name
+          firstName
+          lastName
         }
         instructions{
           id
           body
+          step
         }
-        ingredients{   
-          id                                      
+        ingredients{
+          id
           number
           name
           unitOfMeasurement
@@ -60,14 +69,16 @@ const GET_RECIPE = gql`
       numberOfServings
       images
       user{
-        name
+        firstName
+        lastName
       }
       instructions{
         id
         body
+        step
       }
-      ingredients{   
-        id                                      
+      ingredients{
+        id
         number
         name
         unitOfMeasurement
@@ -76,25 +87,19 @@ const GET_RECIPE = gql`
           id
         }
       }
+      images
     }
   }
 `;
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  fab: {
-    margin: theme.spacing(1),
-    marginTop: -44,
-    zIndex: 1400,
-
-  },
-}));
-
 interface RecipeNewProps {
-  recipe?: RecipeForm
+  recipe?: RecipeForm;
 }
-export default function RecipeNew(props:RecipeNewProps){
-  const classes = useStyles({});
-  const editRecipe = props.recipe; 
+export default function RecipeNew(props:RecipeNewProps) {
+  const editRecipe = props.recipe;
+  const {
+    push,
+  } = React.useContext(ErrorContext);
   function initialFormValues(): RecipeForm {
     return {
       id: null,
@@ -110,41 +115,78 @@ export default function RecipeNew(props:RecipeNewProps){
             number: null,
             name: null,
             unitOfMeasurement: null,
-          }
-        ]
+          },
+        ],
       }],
       instructions: [
-        { body: null },
-      ]
+        { body: null, step: 0 },
+      ],
+      images: [],
+    };
+  }
+  function isValidIngredientGroups(ingredientGroups) {
+    return true;
+  }
+
+  function isValidInstructions(instructions) {
+    return true;
+  }
+  const recipeValidators = {
+    title: validators.required('title required'),
+    prepTime: validators.required('prep time required'),
+    cookTime: validators.required('cook time required'),
+    numberOfServings: validators.required('number of servings required'),
+    description: validators.required('description required'),
+    ingredientGroups: validate(isValidIngredientGroups, 'no ingredients'),
+    instructions: validate(isValidInstructions, 'no instructions'),
+  };
+  function isErrorResult(result) {
+
+  }
+
+  function discardChanges() {
+  }
+
+  function handleError(error: ApolloError) {
+    push(error.message);
+  }
+  function filterEmptyValues(recipe:RecipeForm) {
+    return {
+      ...recipe,
+      ingredientGroups: _.map(recipe.ingredientGroups || [], (ingredientGroup) => {
+        return {
+          ...ingredientGroup,
+          ingredients: _.filter(ingredientGroup.ingredients, (ingredient) => {
+            return ingredient.number || ingredient.name || ingredient.unitOfMeasurement;
+          }),
+        };
+      }),
+      instructions: _.filter(recipe.instructions, (instruction) => {
+        return instruction.body;
+      }),
     };
   }
 
-  function isErrorResult(result){
-
-  }
-
-  return <Mutation mutation={CREATE_RECIPE}>
-    {(createRecipe, {data}) => (
-      <FormState
-        onSubmit={async ({fields}) => {
+  return <Mutation onError={handleError} context={{ hasUpload: true }} mutation={CREATE_RECIPE}>
+    {(createRecipe, { data }) => {
+      return (<FormState
+        validators={recipeValidators}
+        validateOnSubmit={true}
+        onSubmit={async ({ fields }) => {
           const recipe = _.mapValues(fields, 'value');
-          return createRecipe({variables: {input: {recipe}}});
+          createRecipe({ variables: { input: { recipe: filterEmptyValues(recipe) } } });
         }}
-        initialValues={editRecipe || initialFormValues()}>
-        {(formDetails) => {
-            return (<div>
-              <Fab color="secondary" aria-label="Save" className={classes.fab} onClick={()=>{formDetails.submit()}}>
-              <Icon  className={classNames('fa fa-save')}
-                />
-              </Fab>
+        initialValues={(editRecipe as RecipeForm) || initialFormValues()}>
+        {(formDetails:FormDetails<RecipeForm>) => {
+          return (<div>
+              <RecipeAppBar formDetails={formDetails} discardChanges={discardChanges}/>
               <RecipeHeader formDetails={formDetails} />
               <RecipeIngredients formDetails={formDetails} />
               <RecipeInstructions formDetails={formDetails} />
             </div>);
-          }
         }
-      </FormState>
-  )}
+        }
+      </FormState>);
+    }}
   </Mutation>;
 }
-

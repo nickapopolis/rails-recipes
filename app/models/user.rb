@@ -7,5 +7,8 @@ class User < ApplicationRecord
     :rememberable,
     :trackable,
     :validatable
-	has_many :recipes, dependent: :destroy 
+  has_many :recipes
+
+	validates :first_name, presence: true
+	validates :last_name, presence: true
 end

@@ -12,13 +12,13 @@ import {
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import Downshift from 'downshift'
+import Downshift from 'downshift';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import * as _ from 'lodash';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
-import { push } from 'connected-react-router'
+import { push } from 'connected-react-router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 300,
       width: '100%',
       outline: 'none',
-      height: 'inherit'
+      height: 'inherit',
     },
     searchContainer: {
       backgroundColor: theme.palette.primary.light,
@@ -104,8 +104,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'row',
     },
     hidden: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   }),
 );
 
@@ -120,15 +120,13 @@ const SEARCH = gql`
   }
 `;
 
-
-
 const RecipeSearchResult = ({ item }) => {
   const recipeLink = `/recipes/${item.id}`;
 
   return <Typography>{item.title}</Typography>;
 };
 const searchResultType = {
-  'Recipe': RecipeSearchResult,
+  Recipe: RecipeSearchResult,
 };
 
 interface SearchBoxProps {
@@ -139,15 +137,15 @@ function SearchBox(props:SearchBoxProps) {
   const [inputValue, setInputValue] = React.useState('');
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(null);
-  const {selectRecipe} = props;
+  const { selectRecipe } = props;
 
   function getSearchResult({ item, index, highlightedIndex, selectedItem, getItemProps }) {
     const SearchResultType = searchResultType[item.__typename];
-    const key = `${item.__typename}-${item.id}`
+    const key = `${item.__typename}-${item.id}`;
     const isSelected = selectedItem === item;
     const isHighlighted = highlightedIndex === index;
     const itemProps = getItemProps({
-      key: key,
+      key,
       index,
       item,
     });
@@ -166,21 +164,21 @@ function SearchBox(props:SearchBoxProps) {
     const { children } = props;
     return <Button className={classes.button} size="small" variant="contained">
       {children}
-    </Button>
-  }
+    </Button>;
+  };
   const HelpText = () => {
-    return <Typography variant='subtitle2' >
-      Press <KeyButton>enter</KeyButton> to select, <KeyButton>up</KeyButton> or <KeyButton>down</KeyButton> to navigate, 
+    return <Typography variant="subtitle2" >
+      Press <KeyButton>enter</KeyButton> to select, <KeyButton>up</KeyButton> or <KeyButton>down</KeyButton> to navigate,
       <KeyButton>esc</KeyButton> to dismiss.
-    </Typography>
+    </Typography>;
   };
   const EmptyState = (props) => {
     const { searchText } = props;
     return <div className={classes.emptyStateContainer}>
-      <Typography variant='h5'>{`No results for: ${searchText}`}</Typography>
-      <Typography color="textSecondary" variant='body2'>Try adjusting your search results</Typography>
-    </div>
-  }
+      <Typography variant="h5">{`No results for: ${searchText}`}</Typography>
+      <Typography color="textSecondary" variant="body2">Try adjusting your search results</Typography>
+    </div>;
+  };
   const ControlledAutocomplete = ({ onInputChange, data, loading, clearSelection, ...rest }) => {
     return <Downshift {...rest} >
       {({
@@ -194,52 +192,50 @@ function SearchBox(props:SearchBoxProps) {
       }) => (
           <div className={classes.inputContainer}>
             <input className={classes.hidden}{...getInputProps({
-              onInputChange
             })} />
             {isOpen && <IconButton className={classes.iconButtonClear} onClick={clearSelection}>
-                <Icon 
+                <Icon
                   className={classNames(classes.clearSearchIcon, 'fa fa-times-circle')}
                 />
               </IconButton>
             }
             {isOpen && <Paper className={classes.paper} square>
-              { (()=>{
-                  if (loading) {
-                    return <CircularProgress className={classes.progress} />
+              { (() => {
+                if (loading) {
+                    return <CircularProgress className={classes.progress} />;
                   }
-                  if (!data || !data.search || _.isEmpty(data.search)) {
-                    return <EmptyState searchText={inputValue} />
+                if (!data || !data.search || _.isEmpty(data.search)) {
+                    return <EmptyState searchText={inputValue} />;
                   }
-                  const { search } = data;
-                  return <div>
+                const { search } = data;
+                return <div>
                     <div className={classes.helpTextContainer}><HelpText /></div>
                     <div {...getMenuProps()}>
                       {search.map((item, index) => {
-                        { return getSearchResult({ item, index, highlightedIndex, selectedItem, getItemProps }) }
+                        { return getSearchResult({ item, index, highlightedIndex, selectedItem, getItemProps }); }
                       })}
                     </div>
-                  </div>
-                })()
+                  </div>;
+              })()
               }
             </Paper>
             }
           </div>
         )}
-    </Downshift>
-  }
+    </Downshift>;
+  };
 
-                
   const clearSelection = () => {
     setInputValue('');
     setIsOpen(false);
-  }
+  };
 
   const changeHandler = selectedItem => {
     setSelectedItem(null);
     setIsOpen(false);
     setInputValue('');
     selectRecipe(selectedItem);
-  }
+  };
 
   const stateChangeHandler = changes => {
     const isOpenNewValue = (changes.type === Downshift.stateChangeTypes.mouseUp)
@@ -249,13 +245,13 @@ function SearchBox(props:SearchBoxProps) {
     setSelectedItem(changes.selectedItem || selectedItem);
     setIsOpen(isOpenNewValue);
     setInputValue(changes.inputValue || inputValue);
-  }
+  };
 
   const handleInputChange = event => {
-    const { value } = event.target
+    const { value } = event.target;
     setInputValue(value);
-    setIsOpen(!!(value && value !== ''))
-  }
+    setIsOpen(!!(value && value !== ''));
+  };
 
   return (
     <div className={classes.searchContainer}>
@@ -286,10 +282,10 @@ function SearchBox(props:SearchBoxProps) {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		selectRecipe: (recipe) => {
-			dispatch(push(`/recipes/${recipe.id}`))
-		},
-	};
+ return {
+  selectRecipe: (recipe) => {
+  dispatch(push(`/recipes/${recipe.id}`));
+},
+};
 };
 export default connect(null, mapDispatchToProps)(SearchBox);

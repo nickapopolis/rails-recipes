@@ -1,0 +1,19 @@
+upvote:
+  recipe: upvoted
+  user: one
+  upvote: true
+
+upvote_2:
+  recipe: upvoted
+  user: two
+  upvote: true
+
+downvote:
+  recipe: downvoted
+  user: one
+  upvote: false
+
+downvote_2:
+  recipe: downvoted
+  user: two
+  upvote: false

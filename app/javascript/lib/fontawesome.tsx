@@ -11,6 +11,13 @@ import {
     faThumbsDown,
     faTimesCircle,
     faSave,
+    faUserCircle,
+    faUser,
+    faSignOutAlt,
+    faSignInAlt,
+    faUserPlus,
+    faCaretUp,
+    faCaretDown,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -24,6 +31,13 @@ library.add(
     faThumbsDown,
     faTimesCircle,
     faSave,
+    faUserCircle,
+    faUser,
+    faSignOutAlt,
+    faSignInAlt,
+    faUserPlus,
+    faCaretUp,
+    faCaretDown,
 );
 
 dom.watch();

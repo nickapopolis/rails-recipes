@@ -1,16 +1,18 @@
 
 export interface RecipeInstruction {
   body?: string;
+  step: number;
 }
 export interface RecipeIngredient {
-  number?: number;
+  number?: string;
   unitOfMeasurement?: string;
   name?: string;
   id?: number;
   ingredientGroup?: IngredientGroup;
 }
 export interface User {
-  name?: string;
+  firstName?: string;
+  lastName?: string;
 }
 export interface Label {
   name?: string;
@@ -36,4 +38,8 @@ export interface RecipeForm {
   user?: User;
   labels?: Label[];
   images?: string[];
+  upvotes?: number;
+  downvotes?: number;
+  upvoted?: boolean;
+  downvoted?: boolean;
 }

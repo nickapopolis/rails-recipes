@@ -1,0 +1,6 @@
+{
+  "tslint.packageManager": "yarn",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  }
+}

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     [theme.breakpoints.down('xs')]: {
       marginLeft: 0,
       marginTop: theme.spacing(4),
-    }
+    },
   },
   paper: {
     paddingTop: theme.spacing(3),
@@ -38,40 +38,40 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       paddingLeft: 0,
       paddingRight: 0,
       backgroundColor: 'inherit',
-    }
+    },
   },
   step: {
     cursor: 'pointer !important',
-  }
+  },
 }));
 
 interface RecipeInstructionsProps{
   recipe: any;
 }
 
-export default function RecipeInstructions(props: RecipeInstructionsProps){
+export default function RecipeInstructions(props: RecipeInstructionsProps) {
   const [completedSteps, setCompletedSteps] = React.useState([]);
   const classes = useStyles({});
   const { recipe } = props;
   const { instructions = [] } = recipe;
 
-  function getCurrentStep(){
+  function getCurrentStep() {
     return _.first(_.xor(
       _.range(instructions.length),
       completedSteps,
     ));
   }
-  function toggleStepActive(index):void{
-    if(isStepCompleted(index)){
-      setCompletedSteps(_.without(completedSteps, index))
-    }else{
-      setCompletedSteps([...completedSteps, index])
+  function toggleStepActive(index):void {
+    if (isStepCompleted(index)) {
+      setCompletedSteps(_.without(completedSteps, index));
+    }else {
+      setCompletedSteps([...completedSteps, index]);
     }
   }
-  function isStepCompleted(index):boolean{
+  function isStepCompleted(index):boolean {
     return _.includes(completedSteps, index);
   }
-  function isStepActive(index):boolean{
+  function isStepActive(index):boolean {
     return getCurrentStep() === index;
   }
 
@@ -81,15 +81,16 @@ export default function RecipeInstructions(props: RecipeInstructionsProps){
       <Stepper className={classes.stepper} activeStep={getCurrentStep()} orientation="vertical">
         {instructions.map((instruction, index) => {
           return <Step className={classes.step} key={index} active={true} onClick={
-            ()=>{toggleStepActive(index)}
+            () => {toggleStepActive(index);}
           }>
+
             <StepLabel completed={isStepCompleted(index)} active={isStepActive(index)}> </StepLabel>
             <StepContent>
               <Typography className={classes.stepperBodyField}>
                 {instruction.body}
               </Typography>
             </StepContent>
-          </Step>
+          </Step>;
         })}
       </Stepper>
     </React.Fragment>

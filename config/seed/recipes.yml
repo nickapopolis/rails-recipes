@@ -95,50 +95,50 @@ peri_peri_chicken:
         - name: Salt and pepper to season
     - name: 'For the marinade'
       ingredients:
-        - number: <%= 1/2 %>
+        - number: '1/2'
           ingredient_group: marinade
           unit_of_measurement: 'cup'
           name: 'vegetable oil'
-        - number: <%= 1/3 %>
+        - number: '1/3 '
           ingredient_group: marinade
           unit_of_measurement: 'cup'
           name: 'BBQ sauce'
         - number: 3
           ingredient_group: marinade
-          unit_of_measurement: 'tablespoons'
+          unit_of_measurement: 'Tbsp'
           name: 'Worcestershire sauce'
         - number: 2
           ingredient_group: marinade
-          unit_of_measurement: 'tablespoons'
+          unit_of_measurement: 'Tbsp'
           name: 'minced garlic'
         - number: 1
           ingredient_group: marinade
-          unit_of_measurement: 'tablespoon'
+          unit_of_measurement: 'Tbsp'
           name: 'onion powder'
         - number: 2
           ingredient_group: marinade
-          unit_of_measurement: 'teaspoons'
+          unit_of_measurement: 'tsp'
           name: 'fresh squeezed lemon juice (optional)'
         - number: 3
           ingredient_group: marinade
-          unit_of_measurement: 'teaspoons'
+          unit_of_measurement: 'tsp'
           name: 'sriracha'
         - number: 1
           ingredient_group: marinade
-          unit_of_measurement: 'teaspoon'
+          unit_of_measurement: 'tsp'
           name: 'yellow mustard'
         - number: 2
           ingredient_group: marinade
-          unit_of_measurement: 'teaspoons'
+          unit_of_measurement: 'tsp'
           name: salt
         - name: 'Cracked black pepper, to taste (optional)'
           ingredient_group: marinade
   instructions:
-    - "Mix all of the marinade ingredients (except for the Sriracha) together until well combined. Mix in 2-4 teaspoons of Sriracha, taste test, and work up from there until reaching your desired level of heat (or leave it out all together if you don't want any spice at all)."
+    - "Mix all of the marinade ingredients (except for the Sriracha) together until well combined. Mix in 2-4 tsp of Sriracha, taste test, and work up from there until reaching your desired level of heat (or leave it out all together if you don't want any spice at all)."
     - "Using 3/4 of the marinade, coat the chicken evenly on the outside, as well as under the skin where possible (the breast especially), until fully coated in sauce. Cover with plastic wrap and refrigerate over night if time allows. (I recommend a minimum marinade time of two hours for this chicken. The longer you leave it, the better the flavours."
     - "When ready to cook, arrange oven shelf to the middle of the oven, and preheat to 470°F | 245°C."
     - "Remove the chicken from the refrigerator and let it sit on a bench top for 20 minutes, or just enough time to take the chill out of the chicken. (I find 20 minutes plenty of time. Don't leave it any longer than half an hour at room temperature.)"
-    - "Heat 2 tablespoons of oil in an oven proof pan or well seasoned skillet over medium heat. When pan is hot, place the chicken, breast-side down into the pan, and sear for a good 5-6 minutes, until the skin becomes golden browned. Flip and sear on the other side for a further 5 minutes."
-    - "Add 2 more tablespoons of vegetable oil to the remaining marinade, and pour half of it over the chicken. Use a basting brush to coat evenly."
+    - "Heat 2 Tbsp of oil in an oven proof pan or well seasoned skillet over medium heat. When pan is hot, place the chicken, breast-side down into the pan, and sear for a good 5-6 minutes, until the skin becomes golden browned. Flip and sear on the other side for a further 5 minutes."
+    - "Add 2 more Tbsp of vegetable oil to the remaining marinade, and pour half of it over the chicken. Use a basting brush to coat evenly."
     - "Place the chicken in the preheated oven, and cook for 55-60 minutes, or until cooked right through to the centre and juices run clear."
     - "Once the chicken is done, baste with the pan drippings and serve with any remaining UNTOUCHED marinade to use as a dipping sauce."

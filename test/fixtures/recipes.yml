@@ -1,23 +1,29 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  cookTime: 50
+  cook_time: 50
   description: This is a spring time recipe
   calories: 1000
-  prepTime: 50
-  recipeCategory: vegetarian
-  recipeInstructions: This should be cooked
-  numberOfServings: 1
-  totalTime: 100
+  prep_time: 50
+  cook_time: 50
+  number_of_servings: 1
+  total_time: 100
   user: one
 
-two:
-  cookTime: 20
-  description: This is a fall recipe
-  calories: 900
-  prepTime: 70
-  recipeCategory: meat
-  recipeInstructions: This should be cooked
-  numberOfServings: 2
-  totalTime: 90
-  user: two
+upvoted:
+  cook_time: 50
+  description: This is a spring time recipe
+  calories: 1000
+  prep_time: 50
+  cook_time: 50
+  number_of_servings: 1
+  total_time: 100
+
+downvoted:
+  cook_time: 50
+  description: This is a spring time recipe
+  calories: 1000
+  prep_time: 50
+  cook_time: 50
+  number_of_servings: 1
+  total_time: 100

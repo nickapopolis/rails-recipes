@@ -2,14 +2,16 @@ import * as React from 'react';
 import {
   Theme,
   Typography,
-  Chip
+  Chip,
 } from '@material-ui/core';
 import {
   makeStyles,
   createStyles,
 } from '@material-ui/styles';
 import * as _ from 'lodash';
-import {RecipeForm}  from '../../RecipeNew/forms/RecipeForm';
+import { RecipeForm }  from '../../RecipeNew/forms/RecipeForm';
+import StatsText from './StatsText';
+import VoteChip from './VoteChip';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -28,20 +30,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   informationText: {
     marginBottom: theme.spacing(0.5),
   },
-  statsText: {
-    marginBottom: theme.spacing(0.5),
-    paddingRight: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-  },
   statsContainer: {
     display: 'flex',
     flexDirection: 'row',
     marginBottom: theme.spacing(1),
-    "& > span:first-child": {
-      paddingLeft: 0
-    }
+    '& > span:first-child': {
+      paddingLeft: 0,
+    },
   },
   image: {
     objectFit: 'cover',
@@ -51,20 +46,21 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   imageContainer: {
     marginTop: theme.spacing(1),
     marginRight: theme.spacing(3),
-  }
+  },
 }));
 
-interface StatsTextProps{
-  children?: any;
-}
 interface RecipeHeaderProps{
   recipe: RecipeForm;
 }
 
-export default function RecipeHeader(props: RecipeHeaderProps){
+export default function RecipeHeader(props: RecipeHeaderProps) {
   const classes = useStyles({});
   const { recipe } = props;
   const { images } = recipe;
+  const {
+    upvotes,
+    downvotes,
+  } = recipe;
 
   const title = (
     <Typography className={classes.informationText} variant="h4">
@@ -74,7 +70,7 @@ export default function RecipeHeader(props: RecipeHeaderProps){
 
   const author = (
     <Typography className={classes.informationText} variant="caption">
-      {recipe.user.name}
+      {`${recipe.user.firstName} ${recipe.user.lastName}`}
     </Typography>
   );
 
@@ -82,12 +78,6 @@ export default function RecipeHeader(props: RecipeHeaderProps){
     <Typography className={classes.informationText} variant="body2">
       {recipe.description}
     </Typography>);
-
-  const StatsText = ({children}: StatsTextProps) => <Typography
-    className={classes.statsText}
-    variant="overline" >
-    {children}
-  </Typography>
 
   return (
     <div className={classes.root}>
@@ -101,7 +91,7 @@ export default function RecipeHeader(props: RecipeHeaderProps){
         <div className={classes.statsContainer}>
           <StatsText>
             liked this
-            <Chip label="90%" />
+            <VoteChip upvotes={upvotes} downvotes={downvotes}/>
           </StatsText>
           <StatsText>
             prep time

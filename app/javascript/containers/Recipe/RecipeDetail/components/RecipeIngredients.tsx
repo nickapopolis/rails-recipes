@@ -8,7 +8,7 @@ import {
   List,
   Hidden,
   Checkbox,
-  Paper
+  Paper,
 } from '@material-ui/core';
 import {
   makeStyles,
@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   checkbox: {
     display: 'inline-block',
+    padding: '5px',
   },
   listItemText: {
     display: 'inline-block',
@@ -62,17 +63,17 @@ interface RecipeIngredientsProps {
   recipe: any;
 }
 
-export default function RecipeIngredients(props: RecipeIngredientsProps){
+export default function RecipeIngredients(props: RecipeIngredientsProps) {
   const classes = useStyles({});
   const [ingredientsCompleted, setIngredientsCompleted] = React.useState([]);
   const { recipe } = props;
   const { ingredientGroups } = recipe;
 
-  function toggleIngredientAdded(id:number):void{
-    if(isIngredientCompleted(id)){
-      setIngredientsCompleted(_.without(ingredientsCompleted, id))
-    }else{
-      setIngredientsCompleted([...ingredientsCompleted, id])
+  function toggleIngredientAdded(id:number):void {
+    if (isIngredientCompleted(id)) {
+      setIngredientsCompleted(_.without(ingredientsCompleted, id));
+    }else {
+      setIngredientsCompleted([...ingredientsCompleted, id]);
     }
   }
 
@@ -80,11 +81,11 @@ export default function RecipeIngredients(props: RecipeIngredientsProps){
     return _.includes(ingredientsCompleted, id);
   }
 
-  function ingredientLine(ingredient){
-    if (ingredient.number && ingredient.unitOfMeasurement){
+  function ingredientLine(ingredient) {
+    if (ingredient.number && ingredient.unitOfMeasurement) {
       return `${ingredient.number} ${ingredient.unitOfMeasurement} ${ingredient.name}`;
     }
-    else if (ingredient.number){
+     if (ingredient.number) {
       return `${ingredient.number} ${ingredient.name}`;
     }
     else return ingredient.name;
@@ -94,12 +95,12 @@ export default function RecipeIngredients(props: RecipeIngredientsProps){
     <Typography className={classes.title} variant="h5">Ingredients</Typography>
     <List className={classes.list}>
       {
-        ingredientGroups.map((ingredientGroup)=>{
+        ingredientGroups.map((ingredientGroup) => {
           return <React.Fragment key={ingredientGroup.id || 'root'}>
             {ingredientGroup.name && <ListSubheader disableSticky={true}>{ingredientGroup.name}</ListSubheader>}
-              {ingredientGroup.ingredients.map((ingredient)=>{
+              {ingredientGroup.ingredients.map((ingredient) => {
                 return <ListItem className={classes.listItem} key={ingredient.id} onClick={
-                  ()=>{toggleIngredientAdded(ingredient.id)}
+                  () => {toggleIngredientAdded(ingredient.id);}
                 }>
                   <Checkbox
                     checked={isIngredientCompleted(ingredient.id)}
@@ -110,13 +111,13 @@ export default function RecipeIngredients(props: RecipeIngredientsProps){
                     }}
                   />
                   <ListItemText className={classes.listItemText} primary={ingredientLine(ingredient)} />
-                </ListItem>
+                </ListItem>;
               })}
-          </React.Fragment>
+          </React.Fragment>;
         })
       }
     </List>
-  </React.Fragment>
+  </React.Fragment>;
 
   return (
     <div className={classes.root}>

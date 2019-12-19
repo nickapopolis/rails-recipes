@@ -1,8 +1,18 @@
 module Types
   class QueryType < Types::BaseObject
 
-    field :recipe, Recipe, null: true, description: "A recipe" do
+    field :recipe, Recipe, null: true, description: "A recipe." do
       argument :id, ID, required: true
+    end
+
+    def recipe(id:)
+      ::Recipe.find(id)
+    end
+
+    field :current_user, User, null: true, description: "The logged in user."
+    
+    def current_user
+      context[:current_user]
     end
 
     field :recipe_categories, [RecipeCategory], null: true, description: "Categories of recipes."
@@ -14,10 +24,6 @@ module Types
     field :search, [Searchable], null: true, description: "Search for different record types" do
       argument :query_string, String, required: true
       argument :accept_types, [String], required: true
-    end
-
-    def recipe(id:)
-      ::Recipe.find(id)
     end
 
     def search(query_string:, accept_types:)
@@ -39,9 +45,21 @@ module Types
     end
 
     field :recipes, [Recipe], null: true, description: "A list of recipes"
+    field :recipe_feed, [Recipe], null: true, description: "A list of the most popular recipes"
 
     def recipes
-      ::Recipe.all
+      current_user = context[:current_user]
+      userless_recipes = ::Recipe.where(user_id: nil)
+      if current_user.present?
+        current_users_recipes = ::Recipe.where(user_id: current_user.id)
+        userless_recipes.or(current_users_recipes)
+      else
+        userless_recipes
+      end
+    end
+
+    def recipe_feed
+      userless_recipes = ::Recipe.all.scored.limit(25)
     end
   end
 end

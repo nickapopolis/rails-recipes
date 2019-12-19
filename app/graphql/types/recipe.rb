@@ -2,6 +2,10 @@ module Types
     class Recipe < Types::BaseObject
         model ::Recipe
 
+        def self.authorized?(recipe, context)
+            super && !recipe.user || (context[:current_user] && recipe.user == context[:current_user])
+        end
+
         field :calories, Int, null: true
         field :cook_time, Int, null: true
         field :created_at, GraphQL::Types::ISO8601DateTime, null: false
@@ -20,8 +24,12 @@ module Types
         field :ingredients, [Types::Ingredient], null: true
         field :ingredient_groups, [Types::IngredientGroup], null: true
         field :images, [String], null: true
-        
-        
+        field :score, Int, null: false
+        field :upvotes, Int, null: false
+        field :downvotes, Int, null: false
+        field :upvoted, Boolean, null: false
+        field :downvoted, Boolean, null: false
+
         def images
             object.images.map do |image|
                 Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
@@ -36,5 +44,16 @@ module Types
             object.instructions.order(:step)
         end
 
+        def upvoted
+            return false if !context[:current_user]
+            votes = object.votes.where(user: context[:current_user]).first
+            !!(votes && votes.upvote)
+        end
+
+        def downvoted
+            return false if !context[:current_user]
+            votes = object.votes.where(user: context[:current_user]).first
+            !!(votes && !votes.upvote)
+        end
     end
 end

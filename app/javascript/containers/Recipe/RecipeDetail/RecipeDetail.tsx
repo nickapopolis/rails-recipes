@@ -17,8 +17,11 @@ const GET_RECIPE = gql`
       totalTime
       numberOfServings
       images
+      upvotes
+      downvotes
       user{
-        name
+        firstName
+        lastName
       }
       instructions{
         id
@@ -41,12 +44,12 @@ const GET_RECIPE = gql`
 interface RecipeDetailProps {
   match: {
     params: {
-      id
-    }
-  }
+      id,
+    },
+  };
 }
 
-export default function RecipeDetail(props:RecipeDetailProps){
+export default function RecipeDetail(props:RecipeDetailProps) {
   const id = props.match.params.id;
   return (
     <Query key={id} query={GET_RECIPE} variables={{ id }}>

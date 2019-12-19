@@ -28,7 +28,8 @@ const GET_RECIPES = gql`
       numberOfServings
       images
       user{
-        name
+        firstName
+        lastName
       }
     }
   }
@@ -53,8 +54,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   text: {
     padding: theme.spacing(1),
-  }
-})); 
+  },
+}));
 
 export default function MyRecipesIndex() {
   const classes = useStyles({});
@@ -79,10 +80,9 @@ export default function MyRecipesIndex() {
                 </div>
               </CardActionArea>
             </Card>
-          </Link>
-        })}
+          </Link>;
+        });}
       }}
     </Query>
   );
 }
-

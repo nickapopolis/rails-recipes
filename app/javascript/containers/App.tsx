@@ -4,12 +4,34 @@ import { Provider } from 'react-redux';
 import reduxThunk, { ThunkMiddleware } from 'redux-thunk';
 import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import ApolloClient, { InMemoryCache } from 'apollo-boost';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { createBrowserHistory } from 'history';
 import createRootReducer from '../reducers';
 import routes from '../routes';
 import '../src/main.css';
+
+import { ApolloLink } from 'apollo-link';
+import { BatchHttpLink } from 'apollo-link-batch-http';
+import { createUploadLink } from 'apollo-upload-client';
+import { UserContextProvider } from './components/UserContext';
+import { ErrorContextProvider } from './components/ErrorContext';
+
+const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+const options = {
+  uri: '/graphql',
+  credentials: 'same-origin',
+  headers: {
+    'X-CSRF-Token': csrfToken,
+  },
+};
+
+const httpLink = ApolloLink.split(
+  operation => operation.getContext().hasUpload,
+  createUploadLink(options),
+  new BatchHttpLink(options),
+);
 
 const history = createBrowserHistory();
 const store = createStore(
@@ -20,27 +42,22 @@ const store = createStore(
 );
 
 const cache = new InMemoryCache();
-
-const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
 const client = new ApolloClient({
   cache,
-  credentials: 'same-origin',
-  headers: {
-    'X-CSRF-Token': csrfToken,
-  },
+  link: httpLink,
 });
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#8effc6',
-      main: '#59d495',
-      dark: '#16a267',
-      contrastText: '#000000',
+      light: '#a7ffeb',
+      main: '#1de9b6',
+      dark: '#00bfa5',
+      contrastText: '#ffffff',
     },
     secondary: {
-      light: '#819ca9',
-      main: '#546e7a',
-      dark: '#29434e',
+      light: '#ef6694',
+      main: '#ec407a',
+      dark: '#a52c55',
       contrastText: '#ffffff',
     },
   },
@@ -51,9 +68,13 @@ const App = () => {
     <ApolloProvider client={client}>
       <Provider store={store}>
         <MuiThemeProvider theme={theme}>
-          <ConnectedRouter history={history}>
-            {routes}
-          </ConnectedRouter>
+          <ErrorContextProvider>
+            <UserContextProvider client={client}>
+              <ConnectedRouter history={history}>
+                {routes}
+              </ConnectedRouter>
+            </UserContextProvider>
+          </ErrorContextProvider>
         </MuiThemeProvider>
       </Provider>
     </ApolloProvider>

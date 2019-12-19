@@ -3,6 +3,6 @@ import RecipeEdit from './RecipeEdit';
 
 export {
   RecipeEdit,
-  RecipeNew
+  RecipeNew,
 };
 export default RecipeNew;

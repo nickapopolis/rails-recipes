@@ -15,7 +15,8 @@ const GET_RECIPE = gql`
       numberOfServings
       images
       user{
-        name
+        firstName
+        lastName
       }
       instructions{
         id
@@ -35,15 +36,14 @@ const GET_RECIPE = gql`
   }
 `;
 
-
 interface RecipeEditProps {
   match: {
     params: {
-      id
-    }
-  }
+      id,
+    },
+  };
 }
-export default function RecipeEdit(props:RecipeEditProps){
+export default function RecipeEdit(props:RecipeEditProps) {
   const id = _.get(props, 'match.params.id');
 
   return <Query key={id} query={GET_RECIPE} variables={{ id }}>
@@ -51,8 +51,7 @@ export default function RecipeEdit(props:RecipeEditProps){
       if (loading || !data) {
         return null;
       }
-      return <RecipeNew recipe={data.recipe}/>
+      return <RecipeNew recipe={data.recipe}/>;
     }}
-  </Query>
+  </Query>;
 }
-
