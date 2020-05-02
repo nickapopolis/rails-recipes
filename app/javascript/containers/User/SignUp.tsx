@@ -120,6 +120,13 @@ export default function SignUp() {
     <FormState
       onSubmit={async ({ fields }) => {
         const user = _.mapValues(fields, 'value');
+        const apiUser = {
+          first_name: user.firstName,
+          last_name: user.lastName,
+          email: user.email,
+          password: user.password,
+          password_confirmation: user.passwordConfirmation,
+        };
         const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
         const response = await fetch('/users', {
           method: 'POST',
@@ -129,7 +136,7 @@ export default function SignUp() {
             'Content-Type': 'application/json',
             'X-CSRF-Token': csrfToken,
           },
-          body: JSON.stringify({ user }),
+          body: JSON.stringify({ user: apiUser }),
         });
         if (response.status === 200) {
           reload();
