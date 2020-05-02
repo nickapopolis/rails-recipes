@@ -129,15 +129,17 @@ const searchResultType = {
   Recipe: RecipeSearchResult,
 };
 
-interface SearchBoxProps {
+interface SearchResultsProps {
   selectRecipe: Function;
+  inputValue: string;
 }
-function SearchBox(props:SearchBoxProps) {
+
+function SearchResults(props: SearchResultsProps) {
+
   const classes = useStyles({});
-  const [inputValue, setInputValue] = React.useState('');
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(null);
-  const { selectRecipe } = props;
+  const { selectRecipe, inputValue } = props;
 
   function getSearchResult({ item, index, highlightedIndex, selectedItem, getItemProps }) {
     const SearchResultType = searchResultType[item.__typename];
@@ -202,11 +204,11 @@ function SearchBox(props:SearchBoxProps) {
             {isOpen && <Paper className={classes.paper} square>
               { (() => {
                 if (loading) {
-                    return <CircularProgress className={classes.progress} />;
-                  }
+                  return <CircularProgress className={classes.progress} />;
+                }
                 if (!data || !data.search || _.isEmpty(data.search)) {
-                    return <EmptyState searchText={inputValue} />;
-                  }
+                  return <EmptyState searchText={inputValue} />;
+                }
                 const { search } = data;
                 return <div>
                     <div className={classes.helpTextContainer}><HelpText /></div>
@@ -253,17 +255,7 @@ function SearchBox(props:SearchBoxProps) {
     setIsOpen(!!(value && value !== ''));
   };
 
-  return (
-    <div className={classes.searchContainer}>
-      <Icon className={classNames(classes.searchIcon, 'fa fa-search')} />
-      <input
-        placeholder="Search for recipes"
-        onChange={handleInputChange}
-        value={inputValue}
-        className={classes.searchInput}
-      />
-
-      <Query query={SEARCH} variables={{ queryString: inputValue }}>
+  <Query query={SEARCH} variables={{ queryString: inputValue }}>
         {({ data, loading }) => <ControlledAutocomplete
             selectedItem={selectedItem}
             isOpen={isOpen}
@@ -276,16 +268,13 @@ function SearchBox(props:SearchBoxProps) {
             loading={loading}
           />
         }
-      </Query>
-    </div>
-  );
-}
+  </Query>;
 
-const mapDispatchToProps = (dispatch) => {
- return {
-  selectRecipe: (recipe) => {
-  dispatch(push(`/recipes/${recipe.id}`));
-},
-};
-};
-export default connect(null, mapDispatchToProps)(SearchBox);
+  const mapDispatchToProps = (dispatch) => {
+    return {
+    selectRecipe: (recipe) => {
+      dispatch(push(`/recipes/${recipe.id}`));
+    },
+  };
+  };
+  export default connect(null, mapDispatchToProps)(SearchResults);
