@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   accountIconButton: {
     marginLeft: 'auto',
+    height: '2em',
   },
   menuItemLink: {
     textDecoration: 'none',

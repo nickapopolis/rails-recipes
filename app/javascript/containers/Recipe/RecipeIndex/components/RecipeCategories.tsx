@@ -3,26 +3,31 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import RecipeCategoryCard from './RecipeCategoryCard';
 import { makeStyles, createStyles } from '@material-ui/styles';
-import { Theme } from '@material-ui/core';
+import { Theme, Icon, Chip } from '@material-ui/core';
+import classNames from 'classnames';
+import {  Category } from './types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-      flexDirection: 'column',
-      [theme.breakpoints.up('sm')]: {
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-      },
+      flexDirection: 'row',
+      alignItems: 'center',
     },
-    cardContainer: {
-      [theme.breakpoints.down('xs')]: {
-        paddingBottom: theme.spacing(2),
-      },
-      [theme.breakpoints.up('sm')]: {
-        flex: '1 1 21%',
-        padding: theme.spacing(2),
-      },
+    downIcon: {
+      color: theme.palette.text.secondary,
+      width: '0.4em !important',
+    },
+    categoryChip: {
+      marginRight: theme.spacing(1),
+    },
+    chipLabel: {
+      paddingRight: 0,
+    },
+    slidersIcon: {
+      maxHeight: '0.8em',
+      marginRight: theme.spacing(1),
+      color: theme.palette.text.secondary,
     },
   }),
 );
@@ -30,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const GET_RECIPE_CATEGORIES = gql`
   {
     recipeCategories {
+      id
       name
       labels {
         name
@@ -37,13 +43,25 @@ const GET_RECIPE_CATEGORIES = gql`
     }
   }
 `;
+interface GetRecipeCategoriesResponse {
+  loading: boolean;
+  data: {
+    recipeCategories: Category[];
+  };
+}
 
 export default function RecipeCategories() {
   const classes = useStyles({});
+
+  function handleClick()  {
+
+  }
+
   return (
     <div className={classes.root}>
+      <Icon className={classNames('fa fa-sliders-h', classes.slidersIcon)} />
       <Query query={GET_RECIPE_CATEGORIES}>
-        {({ data, loading }) => {
+        {({ data, loading }:GetRecipeCategoriesResponse) => {
           if (loading || !data) {
             return null;
           }
@@ -52,11 +70,14 @@ export default function RecipeCategories() {
             return null;
           }
           return recipeCategories.map((category, i) => {
-            return (
-              <div className={classes.cardContainer} key={i}>
-                <RecipeCategoryCard category={category} />
-              </div>
-            );
+            return <Chip
+              key={category.id}
+              label={ category.name }
+              onClick={handleClick}
+              onDelete={handleClick}
+              className={classes.categoryChip}
+              deleteIcon={<Icon className={classNames('fa fa-chevron-down', classes.downIcon)}/>}
+            />;
           });
         }}
       </Query>

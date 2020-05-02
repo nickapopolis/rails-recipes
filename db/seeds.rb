@@ -53,9 +53,7 @@ if ENV.fetch('RAILS_ENV') == 'development'
         name: ingredient_group['name'],
         ingredients: ingredient_group.fetch('ingredients', []).map do |ingredient|
           Ingredient.new(
-            number: ingredient['number'],
-            name: ingredient['name'],
-            unit_of_measurement: ingredient['unit_of_measurement'],
+            name: ingredient,
           )
         end
       )
@@ -82,6 +80,7 @@ if ENV.fetch('RAILS_ENV') == 'development'
       ingredient_groups: ingredient_groups,
       instructions: instructions,
       labels: labels,
+      public: recipe['public'] || false
     )
 
     recipe.fetch('images', []).each do |recipe_image|

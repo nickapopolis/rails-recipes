@@ -14,7 +14,7 @@ class Recipe < ApplicationRecord
 	validates :title, presence: true
 
   scope :scored, -> { order 'score DESC' }
-  scope :not_private, -> { where(user_id: nil) }
+  scope :public_recipes, -> { where(user_id: nil).or(Recipe.where(public: true)) }
 
   document_type "Recipe"
 

@@ -105,14 +105,14 @@ export default function RecipeHeader(props: RecipeHeaderProps) {
             total time
             <Chip label={`${recipe.totalTime} minutes` } />
           </StatsText>
-          <StatsText>
+          {recipe.numberOfServings &&<StatsText>
             servings
             <Chip label={recipe.numberOfServings} />
-          </StatsText>
-          <StatsText>
+          </StatsText>}
+          {recipe.calories && <StatsText>
             calories
             <Chip label={recipe.calories} />
-          </StatsText>
+          </StatsText>}
         </div>
         {author}
         {description}

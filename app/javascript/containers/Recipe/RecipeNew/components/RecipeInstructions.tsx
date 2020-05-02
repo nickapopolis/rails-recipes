@@ -17,7 +17,7 @@ import {
   createStyles,
 } from '@material-ui/styles';
 import { RecipeForm, RecipeInstruction } from '../forms/RecipeForm';
-import { FormDetails } from '@shopify/react-form-state';
+import { FormDetails, FieldDescriptor } from '@shopify/react-form-state';
 import * as _ from 'lodash';
 import { replace } from '../../../../lib/utilities';
 import classNames from 'classnames';
@@ -58,11 +58,16 @@ export default function RecipeInstructions(props:RecipeInstructionsProps) {
       value: instructionFieldValue || '',
       initialvalue: initialFieldValue,
       onChange(event) {
+        const lastInstruction = _.last(instructions.value);
         const newInstructionValue = {
           ...fieldValues,
           [field]: event.target.value,
         };
-        instructions.onChange(replace(instructions.value, index, newInstructionValue));
+        instructions.onChange(
+          !!lastInstruction.body
+          ? [...replace(instructions.value, index, newInstructionValue), newInstruction()]
+          : replace(instructions.value, index, newInstructionValue)
+        );
       },
     };
   }
@@ -72,6 +77,13 @@ export default function RecipeInstructions(props:RecipeInstructionsProps) {
       body: '',
       step: instructions.value.length,
     };
+  }
+
+  function addInstruction() {
+    instructions.onChange([
+      ...instructions.value,
+      newInstruction(),
+    ]);
   }
 
   return <Paper className={classes.paper}>
@@ -90,7 +102,7 @@ export default function RecipeInstructions(props:RecipeInstructionsProps) {
           </StepContent>
         </Step>;
       })}
-      <Step completed={false} active={true} onClick={() => {instructions.onChange([...instructions.value, newInstruction()]);}}>
+      <Step completed={false} active={true} onClick={() => {addInstruction(); }}>
         <StepIcon icon={
           <Fab size="small" color="primary" aria-label="Add" className={classes.addButton}>
             <Icon className={classNames('fa fa-plus fa-xs', classes.addButtonIcon)}/>

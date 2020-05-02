@@ -18,6 +18,9 @@ import {
     faUserPlus,
     faCaretUp,
     faCaretDown,
+    faChevronDown,
+    faChevronUp,
+    faSlidersH,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -38,6 +41,9 @@ library.add(
     faUserPlus,
     faCaretUp,
     faCaretDown,
+    faChevronDown,
+    faChevronUp,
+    faSlidersH,
 );
 
 dom.watch();

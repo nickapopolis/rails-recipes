@@ -3,7 +3,10 @@ module Types
         model ::Recipe
 
         def self.authorized?(recipe, context)
-            super && !recipe.user || (context[:current_user] && recipe.user == context[:current_user])
+            super &&
+                !recipe.user ||
+                recipe.public ||
+                (context[:current_user] && recipe.user == context[:current_user])
         end
 
         field :calories, Int, null: true
@@ -34,10 +37,6 @@ module Types
             object.images.map do |image|
                 Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
             end
-        end
-
-        def user
-            ::User.find(object.user_id)
         end
 
         def instructions

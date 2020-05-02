@@ -48,18 +48,26 @@ module Types
     field :recipe_feed, [Recipe], null: true, description: "A list of the most popular recipes"
 
     def recipes
-      current_user = context[:current_user]
-      userless_recipes = ::Recipe.where(user_id: nil)
-      if current_user.present?
-        current_users_recipes = ::Recipe.where(user_id: current_user.id)
-        userless_recipes.or(current_users_recipes)
-      else
-        userless_recipes
-      end
+      current_users_recipes
     end
 
     def recipe_feed
-      userless_recipes = ::Recipe.all.scored.limit(25)
+      query = if current_user.present?
+        public_recipes.or(current_users_recipes)
+      else
+        public_recipes
+      end
+      query.scored.limit(25)
+    end
+
+    private
+
+    def public_recipes
+      ::Recipe.public_recipes
+    end
+
+    def current_users_recipes
+      ::Recipe.where(user_id: current_user.id)
     end
   end
 end

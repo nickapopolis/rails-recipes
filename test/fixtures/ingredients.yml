@@ -2,12 +2,4 @@
 
 one:
   ingredient_group: one
-  name: MyString
-  number: 1
-  unit_of_measurement: Tbsp
-
-two:
-  ingredient_group: two
-  name: MyString
-  number: 1
-  unit_of_measurement: MyString
+  name: 1 Tbsp sugar

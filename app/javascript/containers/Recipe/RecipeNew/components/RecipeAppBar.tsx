@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     flexDirection: 'row',
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 2,
+    zIndex: theme.zIndex.drawer - 1,
     backgroundColor: theme.palette.background.paper,
   },
   buttonsContainer: {
@@ -66,7 +66,7 @@ export default function RecipeAppBar({ formDetails, discardChanges }:RecipeAppBa
             aria-label="Save"
             size="medium"
             className={classes.discardButton}
-            onClick={() => {discardChanges();}}>
+            onClick={() => {discardChanges(); }}>
               Discard
           </Button>
           <Button
@@ -75,7 +75,7 @@ export default function RecipeAppBar({ formDetails, discardChanges }:RecipeAppBa
             aria-label="Save"
             size="medium"
             className={classes.saveButton}
-              onClick={() => {formDetails.submit();}}>
+              onClick={() => {formDetails.submit(); }}>
               <Icon  className={classNames(classes.saveIcon, 'fa fa-save')} />
               Save
           </Button>

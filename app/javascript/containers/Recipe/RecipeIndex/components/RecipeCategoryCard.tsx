@@ -13,6 +13,10 @@ import {
   ListItemText,
   Theme,
 } from '@material-ui/core';
+import {
+  Label,
+  Category,
+} from './types';
 import { makeStyles, createStyles } from '@material-ui/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from 'react-router-dom';
@@ -40,13 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface Label {
-  name: string;
-}
-interface Category {
-  name: string;
-  labels: Label[];
-}
 interface RecipeCategoryCardProps {
   category: Category;
 }

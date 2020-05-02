@@ -8,8 +8,6 @@ type Ingredient {
   id: Int!
   ingredientGroup: IngredientGroup
   name: String!
-  number: String
-  unitOfMeasurement: String
 }
 
 type IngredientGroup {
@@ -55,6 +53,7 @@ type Recipe {
   datePublished: ISO8601DateTime!
   description: String
   downvoted: Boolean!
+  downvotes: Int!
   id: ID!
   images: [String!]
   ingredientGroups: [IngredientGroup!]

@@ -5,22 +5,8 @@ import { RecipeForm } from './forms/RecipeForm';
 import RecipeInstructions from './components/RecipeInstructions';
 import RecipeIngredients from './components/RecipeIngredients';
 import RecipeAppBar from './components/RecipeAppBar';
-import {
-  Icon,
-  Theme,
-  Button,
-  AppBar,
-  Toolbar,
-  Snackbar,
-  SnackbarContent,
-} from '@material-ui/core';
-import {
-  makeStyles,
-  createStyles,
-} from '@material-ui/styles';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import classNames from 'classnames';
 import * as _ from 'lodash';
 import { ErrorContext } from '../../components/ErrorContext';
 import { ApolloError } from 'apollo-client';
@@ -46,9 +32,7 @@ const CREATE_RECIPE = gql`
         }
         ingredients{
           id
-          number
           name
-          unitOfMeasurement
           ingredientGroup{
             name
             id
@@ -59,42 +43,11 @@ const CREATE_RECIPE = gql`
     }
   }
 `;
-const GET_RECIPE = gql`
-  query getRecipe($id: ID!){
-    recipe(id: $id){
-      title
-      calories
-      description
-      cookTime
-      numberOfServings
-      images
-      user{
-        firstName
-        lastName
-      }
-      instructions{
-        id
-        body
-        step
-      }
-      ingredients{
-        id
-        number
-        name
-        unitOfMeasurement
-        ingredientGroup{
-          name
-          id
-        }
-      }
-      images
-    }
-  }
-`;
 
 interface RecipeNewProps {
   recipe?: RecipeForm;
 }
+
 export default function RecipeNew(props:RecipeNewProps) {
   const editRecipe = props.recipe;
   const {
@@ -112,9 +65,7 @@ export default function RecipeNew(props:RecipeNewProps) {
       ingredientGroups: [{
         ingredients: [
           {
-            number: null,
             name: null,
-            unitOfMeasurement: null,
           },
         ],
       }],
@@ -157,7 +108,7 @@ export default function RecipeNew(props:RecipeNewProps) {
         return {
           ...ingredientGroup,
           ingredients: _.filter(ingredientGroup.ingredients, (ingredient) => {
-            return ingredient.number || ingredient.name || ingredient.unitOfMeasurement;
+            return ingredient.name;
           }),
         };
       }),
@@ -168,7 +119,7 @@ export default function RecipeNew(props:RecipeNewProps) {
   }
 
   return <Mutation onError={handleError} context={{ hasUpload: true }} mutation={CREATE_RECIPE}>
-    {(createRecipe, { data }) => {
+    {(createRecipe, result) => {
       return (<FormState
         validators={recipeValidators}
         validateOnSubmit={true}

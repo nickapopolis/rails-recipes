@@ -47,8 +47,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       paddingLeft: 0,
       paddingRight: 0,
     },
-    display: 'block',
     cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'flex-start',
   },
   checkbox: {
     display: 'inline-block',
@@ -81,16 +82,6 @@ export default function RecipeIngredients(props: RecipeIngredientsProps) {
     return _.includes(ingredientsCompleted, id);
   }
 
-  function ingredientLine(ingredient) {
-    if (ingredient.number && ingredient.unitOfMeasurement) {
-      return `${ingredient.number} ${ingredient.unitOfMeasurement} ${ingredient.name}`;
-    }
-     if (ingredient.number) {
-      return `${ingredient.number} ${ingredient.name}`;
-    }
-    else return ingredient.name;
-  }
-
   const content = <React.Fragment>
     <Typography className={classes.title} variant="h5">Ingredients</Typography>
     <List className={classes.list}>
@@ -110,7 +101,7 @@ export default function RecipeIngredients(props: RecipeIngredientsProps) {
                       'aria-label': 'primary checkbox',
                     }}
                   />
-                  <ListItemText className={classes.listItemText} primary={ingredientLine(ingredient)} />
+                  <ListItemText className={classes.listItemText} primary={ingredient.name} />
                 </ListItem>;
               })}
           </React.Fragment>;

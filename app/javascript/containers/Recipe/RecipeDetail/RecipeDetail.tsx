@@ -32,9 +32,7 @@ const GET_RECIPE = gql`
         name
         ingredients{
           id
-          number
           name
-          unitOfMeasurement
         }
       }
     }

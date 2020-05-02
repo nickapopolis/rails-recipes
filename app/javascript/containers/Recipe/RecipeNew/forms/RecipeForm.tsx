@@ -4,8 +4,6 @@ export interface RecipeInstruction {
   step: number;
 }
 export interface RecipeIngredient {
-  number?: string;
-  unitOfMeasurement?: string;
   name?: string;
   id?: number;
   ingredientGroup?: IngredientGroup;

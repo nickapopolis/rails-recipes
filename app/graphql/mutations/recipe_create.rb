@@ -26,9 +26,7 @@ module Mutations
               name: ingredient_group.name,
               ingredients: ingredient_group.ingredients.map do |ingredient|
                 Ingredient.new(
-                  number: ingredient.number,
                   name: ingredient.name,
-                  unit_of_measurement: ingredient.unit_of_measurement,
                 )
               end
             )
