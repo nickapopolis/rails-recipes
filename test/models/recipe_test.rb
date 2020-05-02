@@ -38,7 +38,7 @@ class RecipeTest < ActiveSupport::TestCase
     @recipe.stub :upvotes, upvotes do
       @recipe.stub :downvotes, downvotes do
         travel_to date do
-          @recipe.score
+          @recipe.calculate_score
         end
       end
     end
