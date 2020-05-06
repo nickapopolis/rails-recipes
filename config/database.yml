@@ -2,13 +2,15 @@ default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  username: <%= ENV['DB_USER'] || 'postgres' %>
+  username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASS'] %>
-  host: <%= ENV['DB_HOST'] || 'localhost' %>
+  host: <%= ENV['DB_HOST'] %>
 
 development:
   <<: *default
   database: recipes_development
+  host: 'localhost'
+  user: 'postgres'
   pool: 5
 
 # Warning: The database defined as "test" will be erased and
