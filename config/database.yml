@@ -9,6 +9,8 @@ default: &default
 development:
   <<: *default
   database: recipes_development
+  host: 'localhost'
+  user: 'postgres'
   pool: 5
 
 # Warning: The database defined as "test" will be erased and

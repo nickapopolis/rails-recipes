@@ -1,5 +1,5 @@
 # Connect to specific Elasticsearch cluster
-Elasticsearch::Model.client = Elasticsearch::Client.new host: ENV['ELASTICSEARCH_URL']
+Elasticsearch::Model.client = Elasticsearch::Client.new host: ENV['ELASTICSEARCH_URL'] || 'localhost:9201'
 
 # Print Curl-formatted traces in development into a file
 #
