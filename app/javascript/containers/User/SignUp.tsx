@@ -138,8 +138,8 @@ export default function SignUp() {
           },
           body: JSON.stringify({ user: apiUser }),
         });
-        if (response.status === 200) {
-          reload();
+        if (response.status === 201) {
+          window.location.reload();
         }
       }}
       initialValues={initialFormValues()}>
