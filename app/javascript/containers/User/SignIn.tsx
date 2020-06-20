@@ -4,7 +4,6 @@ import { SignInForm } from './forms/SignInForm';
 import {
   Theme,
   Button,
-  Paper,
   TextField,
   Typography,
 } from '@material-ui/core';
