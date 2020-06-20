@@ -12,13 +12,6 @@ namespace :elasticsearch do
         %x(curl --silent --show-error -XDELETE #{ENV['ELASTICSEARCH_URL']}/_all)
     end
 
-    task search: [:environment] do
-
-        puts Types::Recipe.model
-        result_hash = Elasticsearch::Model.search('pork', [Recipe]).results.to_a.map(&:to_hash)
-       puts  result_hash.inspect
-    end
-
     task index: [:environment] do
         searchable_classes.each do |klass|
             klass.__elasticsearch__.create_index!(include_type_name: true)
