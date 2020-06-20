@@ -22,7 +22,6 @@ if ENV.fetch('RAILS_ENV') == 'development'
 
   created_users = create_seeds('users') do |user|
     User.create!(
-      id: user['id'],
       first_name: user['first_name'],
       last_name: user['last_name'],
       email: user['email'],
@@ -32,14 +31,12 @@ if ENV.fetch('RAILS_ENV') == 'development'
 
   created_labels = create_seeds('labels') do |label|
     Label.create!(
-      id: label['id'],
       name: label['name'],
     )
   end
 
   created_categories = create_seeds('recipe_categories') do |recipe_category|
     RecipeCategory.create(
-      id: recipe_category['id'],
       name: recipe_category['name'],
       labels: recipe_category.fetch('labels', []).map do |label|
         created_labels.fetch(label)
@@ -67,8 +64,7 @@ if ENV.fetch('RAILS_ENV') == 'development'
     end
 
     created_recipe = Recipe.create!(
-      id: recipe['id'],
-      user_id: recipe['user_id'],
+      user: created_users.fetch(recipe['user']),
       calories: recipe['calories'],
       cook_time: recipe['cook_time'],
       description: recipe['description'],

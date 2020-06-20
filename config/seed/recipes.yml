@@ -1,6 +1,5 @@
 smokey_pork_sliders:
-  id: 1
-  user_id: 1
+  user: test_test
   calories: 1000
   cook_time: <%= 1.hour.to_i %>
   description: 'These mini burgers are absolutely stunning, all smoky from the bacon and paprika and with the sweet and sour hit from the homemade barbeque sauce. People often add too much to their burgers thinking it will enrich the flavor, but let me tell you, when it comes to burgers, less is more. Trust me.'
@@ -49,8 +48,7 @@ smokey_pork_sliders:
     - 'Heat a large, heavy-bottomed frying pan with a little oil. Season the patties and cook them for 1-2 minutes on each side, basting with the juices until cooked through and colored. Turn off the heat and leave them to rest in the pan. Top each patty with a slice of cheese, allowing it to melt slightly.'
     - 'Assemble your sliders in mini buns, layered with the barbecue sauce, lettuce, and slices of tomato. Any remaining barbecue sauce will keep in the fridge very well. Serve immediately.'
 apple_crisp:
-  id: 2
-  user_id: 1
+  user: test_test
   public: true
   cook_time: <%= (40.minutes).to_i %>
   description: "This is grams apple crisp recipe."
@@ -77,8 +75,7 @@ apple_crisp:
     - Scatter mix on top of the apples
     - Cook for 30-40 minutes or until the apples are no longer hard
 new_york_style_pizza:
-  id: 3
-  user_id: 1
+  user: test_test
   public: false
   cook_time: <%= (8.minutes).to_i %>
   description: "This is the best New York style pizza recipe that I've found"
@@ -118,5 +115,35 @@ new_york_style_pizza:
     - When you want to bake, put a pizza stone or pizza steel into your oven (mine works best on a high rack position but every oven is different) and preheat to your highest possible temperature, ideally convection, for a full hour.
     - For the sauce, simply mix together the ingredients.
     - Liberally dust a pizza peel with cornmeal (or something similar). Take the cold dough out of the fridge and dust it in flour. Stretch to the widest size and shape that will fit on your peel and stone/steel. Top with just enough sauce to lightly coat the surface. Dust the sauce layer with parmesan, then cover with the mozzarella. Transfer the pizza to the stone/steel and bake until the crust is well-browned and the cheese has browned a bit (but, ideally, has not started oozing out an orange grease layer), 6-7 minutes.
+chicken_noodle_soup:
+  user: test_test
+  cook_time: <%= 20.minutes %>
+  calories: 162
+  description: 'A really quick chicken noodle soup recipe.'
+  number_of_servings: 6
+  prep_time: <%= 10.minutes %>
+  recipe_category: 'bbq'
+  total_time: <%= (30.minutes).to_i %>
+  title: 'Chicken noodle soup'
+  labels:
+    - chicken
+    - dinner
+  ingredient_groups:
+    - ingredients:
+      - 1 tablespoon butter
+      - ½ cup chopped onion
+      - ½ cup chopped celery
+      - 4 (14.5 ounce) cans chicken broth
+      - 1 (14.5 ounce) can vegetable broth
+      - ½ pound chopped cooked chicken breast
+      - 1 ½ cups egg noodles
+      - 1 cup sliced carrots
+      - ½ teaspoon dried basil
+      - ½ teaspoon dried oregano
+      - salt and pepper to taste
+  instructions:
+    - In a large pot over medium heat, melt butter. Cook onion and celery in butter until just tender, 5 minutes.
+    - Pour in chicken and vegetable broths and stir in chicken, noodles, carrots, basil, oregano, salt and pepper.
+    - Bring to a boil, then reduce heat and simmer 20 minutes before serving.
 
 

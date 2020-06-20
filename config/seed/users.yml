@@ -1,6 +1,5 @@
-nick_tierney:
-  id: 1
-  first_name: 'Nick'
-  last_name: 'Tierney'
+test_test:
+  first_name: 'Test'
+  last_name: 'Test'
   email: 'test@test.com'
   password: '123456'
