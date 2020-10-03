@@ -1,4 +1,10 @@
-# rails-recipes
+# Tasteful recipes
+
+This project aims to make a recipe website that fixes the problems which are rampant in popular recipe websites.
+If this project is succussful then you will:
+- reduce time spent scrolling on recipes
+- reduce time spent loading recipes
+- reduce time spent looking for ingredients and instructions on recipes
 
 [![Build Status](https://travis-ci.org/nickapopolis/rails-recipes.svg?branch=master)](https://travis-ci.org/nickapopolis/rails-recipes)
 
