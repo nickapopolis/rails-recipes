@@ -1,8 +1,4 @@
-require 'elasticsearch/model'
-
 class Recipe < ApplicationRecord
-	include Elasticsearch::Model
-	include Elasticsearch::Model::Callbacks
 
 	LN10 = 2.30258
 
@@ -14,28 +10,8 @@ class Recipe < ApplicationRecord
 	validates :title, presence: true
 
   scope :scored, -> { order 'score DESC' }
-  scope :public_recipes, -> { where(user_id: nil).or(Recipe.where(public: true)) }
-
-  document_type "Recipe"
-
-	settings index: { number_of_shards: 1 } do
-		mappings dynamic: 'false' do
-			indexes :title, analyzer: 'english'
-			indexes :user_id, type: 'integer'
-			indexes :cook_time, type: 'integer'
-			indexes :date_published, type: 'date'
-			indexes :description, analyzer: 'english'
-			indexes :calories, type: 'integer'
-			indexes :prep_time, type: 'integer'
-			indexes :recipe_category, analyzer: 'english'
-			indexes :number_of_servings, type: 'integer'
-			indexes :total_time, type: 'integer'
-			indexes :title, analyzer: 'english'
-			indexes :created_at, type: 'date'
-			indexes :updated_at, type: 'date'
-		end
-	end
-	
+  scope :alphabetic, -> { order 'title ASC' }
+  scope :public_recipes, -> { where(public: true) }
 
 	belongs_to :user
 	has_many :recipeimages, dependent: :destroy 
@@ -48,11 +24,14 @@ class Recipe < ApplicationRecord
 	has_many :ingredients, dependent: :destroy, through: :ingredient_groups
   has_many_attached :images
   
+	def date_published
+		created_at
+	end
 
   def total_time
     cook_time + prep_time
 	end
-	
+
 	def calculate_score
 		decay = 45000;
 		s = upvotes - downvotes

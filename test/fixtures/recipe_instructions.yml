@@ -1,11 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+public_one:
+  recipe: public
+  step: 0
+  body: 'Preheat the oven to 375°F'
+public_two:
+  recipe: public
+  step: 1
+  body: 
+    - 'Place apples in a baking pan'

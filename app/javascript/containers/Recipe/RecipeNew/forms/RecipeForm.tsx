@@ -5,7 +5,7 @@ export interface RecipeInstruction {
 }
 export interface RecipeIngredient {
   name?: string;
-  id?: number;
+  id?: string;
   ingredientGroup?: IngredientGroup;
 }
 export interface User {
@@ -14,11 +14,11 @@ export interface User {
 }
 export interface Label {
   name?: string;
-  id?: number;
+  id?: string;
 }
 export interface IngredientGroup {
   name?: string;
-  id?: number;
+  id?: string;
   ingredients?: RecipeIngredient[];
 }
 export interface RecipeForm {
@@ -32,7 +32,7 @@ export interface RecipeForm {
   instructions?: RecipeInstruction[];
   ingredients?: RecipeIngredient[];
   ingredientGroups?: IngredientGroup[];
-  id?: number;
+  id?: string;
   user?: User;
   labels?: Label[];
   images?: string[];

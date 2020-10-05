@@ -1,8 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  user: one
+  public: false
   cook_time: 50
-  description: This is a spring time recipe
+  description: This is one recipe
   calories: 1000
   prep_time: 50
   cook_time: 50
@@ -11,8 +13,10 @@ one:
   user: one
 
 upvoted:
+  user: one
+  public: false
   cook_time: 50
-  description: This is a spring time recipe
+  description: This is an upvoted recipe
   calories: 1000
   prep_time: 50
   cook_time: 50
@@ -20,10 +24,64 @@ upvoted:
   total_time: 100
 
 downvoted:
+  user: one
+  public: false
   cook_time: 50
-  description: This is a spring time recipe
+  description: This is a downvoted recipe
   calories: 1000
   prep_time: 50
   cook_time: 50
   number_of_servings: 1
   total_time: 100
+
+public:
+  user: one
+  public: true
+  cook_time: 50
+  title: 'Public recipe'
+  description: 'This is the most public recipe that I have ever seen'
+  calories: 1000
+  prep_time: 50
+  cook_time: 50
+  number_of_servings: 1
+  total_time: 100
+  score: 10000
+
+public_low_score:
+  user: one
+  public: true
+  cook_time: 50
+  title: 'Public low score recipe'
+  description: 'This is the most publicly low scored recipe that I have ever seen'
+  calories: 1000
+  prep_time: 50
+  cook_time: 50
+  number_of_servings: 1
+  total_time: 100
+  score: 1
+
+search:
+  user: search_user
+  public: false
+  cook_time: 50
+  title: 'Jerk chicken'
+  description: 'This is the greatest jerk recipe that I have ever seen'
+  calories: 1000
+  prep_time: 50
+  cook_time: 50
+  number_of_servings: 1
+  total_time: 100
+
+feed:
+  user: feed_user
+  public: false
+  user: two
+  cook_time: 50
+  title: 'High score recipe'
+  description: 'This is the literally the greatest recipe that I have ever seen'
+  calories: 1000
+  prep_time: 50
+  cook_time: 50
+  number_of_servings: 1
+  total_time: 100
+
