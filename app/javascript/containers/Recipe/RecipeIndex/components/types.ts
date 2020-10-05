@@ -13,7 +13,7 @@ export interface RecipeResponse {
   title: string;
   id: string;
   images: string[];
-  createdAt: Date;
+  datePublished: Date;
   upvotes: number;
   upvoted: boolean;
   downvoted: boolean;

@@ -3,6 +3,20 @@
 one: 
   email: 'test@test.com'
   encrypted_password: <%= User.new.send(:password_digest, '123456') %>
+  first_name: 'TestOne'
+  last_name: 'Test'
 two:
   email: 'test2@test.com'
   encrypted_password: <%= User.new.send(:password_digest, '123456') %>
+  first_name: 'TestTwo'
+  last_name: 'Test'
+search_user:
+  email: 'search_user@test.com'
+  encrypted_password: <%= User.new.send(:password_digest, '123456') %>
+  first_name: 'SearchUser'
+  last_name: 'Test'
+feed_user:
+  email: 'feed_user@test.com'
+  encrypted_password: <%= User.new.send(:password_digest, '123456') %>
+  first_name: 'FeedUser'
+  last_name: 'Test'

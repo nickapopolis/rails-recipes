@@ -60,6 +60,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'graphiql-rails', group: :development
 
-gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '6.x'
-gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '6.x'
 gem 'apollo_upload_server', '2.0.0.beta.3'

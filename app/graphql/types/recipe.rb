@@ -11,7 +11,7 @@ module Types
 
         field :calories, Int, null: true
         field :cook_time, Int, null: true
-        field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+        field :date_published, GraphQL::Types::ISO8601DateTime, null: false
         field :date_published, GraphQL::Types::ISO8601DateTime, null: false
         field :description, String, null: true
         field :id, ID, null: false

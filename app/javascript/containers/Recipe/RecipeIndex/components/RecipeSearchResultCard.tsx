@@ -189,7 +189,7 @@ export default function RecipeSearchResultCard(
                 </div>
                 <div className={classes.text}>
                   <Typography variant="subtitle1">
-                    {recipe.createdAt}
+                    {recipe.datePublished}
                   </Typography>
                   <Typography>{recipe.title}</Typography>
                 </div>

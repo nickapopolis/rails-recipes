@@ -11,7 +11,7 @@ type Ingredient {
 }
 
 type IngredientGroup {
-  id: Int!
+  id: ID!
   ingredients: [Ingredient!]
   name: String
 }
@@ -39,17 +39,16 @@ type Query {
   # A list of the most popular recipes
   recipeFeed: [Recipe!]
 
+  # Search for recipes using a query string
+  recipeSearch(queryString: String!): [Recipe!]
+
   # A list of recipes
   recipes: [Recipe!]
-
-  # Search for different record types
-  search(acceptTypes: [String!]!, queryString: String!): [Searchable!]
 }
 
 type Recipe {
   calories: Int
   cookTime: Int
-  createdAt: ISO8601DateTime!
   datePublished: ISO8601DateTime!
   description: String
   downvoted: Boolean!
@@ -102,8 +101,6 @@ input RecipeIngredientGroupInput {
 input RecipeIngredientInput {
   id: Int
   name: String!
-  number: String
-  unitOfMeasurement: String
 }
 
 input RecipeInput {
@@ -123,7 +120,7 @@ input RecipeInput {
 
 type RecipeInstruction {
   body: String!
-  id: Int!
+  id: ID!
   step: Int!
 }
 
@@ -153,11 +150,8 @@ type RecipeVotePayload {
   errors: [String!]!
 }
 
-# Objects which may be searched on
-union Searchable = Recipe
-
 type User {
-  email: String!
+  email: String
   firstName: String!
   lastName: String!
 }

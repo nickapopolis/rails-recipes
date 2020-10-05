@@ -7,16 +7,3 @@ services:
      - "5432:5432"
   rails:
     image:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.0
-    restart: unless-stopped
-    environment:
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    ports:
-     - "9201:9200"
-     - "9301:9300"

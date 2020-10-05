@@ -1,13 +1,8 @@
+require 'recipe_feed'
+require 'recipe_search'
+
 module Types
   class QueryType < Types::BaseObject
-
-    field :recipe, Recipe, null: true, description: "A recipe." do
-      argument :id, ID, required: true
-    end
-
-    def recipe(id:)
-      ::Recipe.find(id)
-    end
 
     field :current_user, User, null: true, description: "The logged in user."
     
@@ -21,53 +16,32 @@ module Types
       ::RecipeCategory.all
     end
 
-    field :search, [Searchable], null: true, description: "Search for different record types" do
-      argument :query_string, String, required: true
-      argument :accept_types, [String], required: true
+    field :recipe, Recipe, null: true, description: "A recipe." do
+      argument :id, ID, required: true
     end
 
-    def search(query_string:, accept_types:)
-      accept_types_classes = accept_types.map { |class_name| Object.const_get(class_name)}
-      results = Elasticsearch::Model.search(query_string, accept_types_classes.map(&:model)).results.to_a.map(&:to_hash)
-      results_by_type = results.group_by {|result| result['_type']}
-      records_by_type = results_by_type.map do |class_name, results|
-        klass = Object.const_get(class_name)
-        record_ids = results.map { |record| record['_id'] }
-        klass.where(id: record_ids)
-      end
-      records_by_id = records_by_type.flatten.reduce({}) do |records_by_id, record|
-        records_by_id[record.id] = record
-        records_by_id
-      end
-      results.map do |result|
-        records_by_id[result['_id'].to_i]
-      end
+    def recipe(id:)
+      ::Recipe.find(id)
     end
 
     field :recipes, [Recipe], null: true, description: "A list of recipes"
-    field :recipe_feed, [Recipe], null: true, description: "A list of the most popular recipes"
 
     def recipes
-      current_users_recipes
+      ::Recipe.where(user: current_user).alphabetic
     end
+
+    field :recipe_feed, [Recipe], null: true, description: "A list of the most popular recipes"
 
     def recipe_feed
-      query = if current_user.present?
-        public_recipes.or(current_users_recipes)
-      else
-        public_recipes
-      end
-      query.scored.limit(25)
+      RecipeFeed.new.recipes
     end
 
-    private
-
-    def public_recipes
-      ::Recipe.public_recipes
+    field :recipe_search, [Recipe], null: true, description: "Search for recipes using a query string" do
+      argument :query_string, String, required: true
     end
 
-    def current_users_recipes
-      ::Recipe.where(user_id: current_user.id)
+    def recipe_search(query_string:)
+      RecipeSearch.new(query_string: query_string, user: current_user).results
     end
   end
 end

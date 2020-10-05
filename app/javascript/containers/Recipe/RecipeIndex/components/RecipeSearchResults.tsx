@@ -16,7 +16,7 @@ const GET_RECIPES = gql`
       title
       id
       images
-      createdAt
+      datePublished
       upvotes
       upvoted
       downvoted
@@ -26,12 +26,12 @@ const GET_RECIPES = gql`
 
 const SEARCH = gql`
   query search($queryString: String!) {
-    recipes: search(queryString: $queryString, acceptTypes: ["Types::Recipe"]) {
+    recipes: recipeSearch(queryString: $queryString) {
       ... on Recipe {
         title
         id
         images
-        createdAt
+        datePublished
         upvotes
         upvoted
         downvoted
@@ -54,14 +54,12 @@ interface GetRecipesResponse {
 const useStyles = makeStyles((theme: Theme) => createStyles({
   searchMessage: {
     marginLeft: theme.spacing(1),
-  }
+  },
 }));
 
 interface RecipeIngredientsProps {
   recipe: any;
 }
-
-
 
 export default function RecipeSearchResults(props: RecipeSearchResultsProps) {
   const classes = useStyles({});
