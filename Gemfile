@@ -33,7 +33,7 @@ gem 'whenever', require: false
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'devise'
+gem "devise", ">= 4.7.1"
 gem 'graphql'
 gem 'coffee-rails'
 

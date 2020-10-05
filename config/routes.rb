@@ -3,11 +3,17 @@ Rails.application.routes.draw do
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
   post "/graphql", to: "graphql#execute"
-  devise_for :users, :controllers => {:registrations => "registrations"}
 
+  devise_for :users, :skip => [:sessions, :passwords, :registrations]
+
+  devise_scope :user do
+    post '/users/sign_in' => "devise/sessions#create"
+    delete '/users/sign_out' => "devise/sessions#destroy"
+
+    post '/users' => "registrations#create"
+  end
 
   resources :recipes, only: %i(index show edit), to: "pages#index"
-
   get "/my_recipes", to: "pages#index"
   get "/users/sign_up", to: "pages#index"
   get "/users/sign_in", to: "pages#index"
