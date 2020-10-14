@@ -8,48 +8,44 @@ import * as _ from 'lodash';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
-      display: 'flex',
-      flexDirection: 'row',
-      width: '100%',
-      marginBottom: theme.spacing(2),
-      [theme.breakpoints.down('xs')]: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.down('xs')]: {
         flexDirection: 'column',
       },
-    },
+  },
   informationContainer: {
-      marginLeft: theme.spacing(2),
-      [theme.breakpoints.down('xs')]: {
-        marginLeft: 0,
-      },
-      display: 'flex',
-      flexDirection: 'column',
-    },
+    display: 'flex',
+    flexDirection: 'column',
+  },
   informationText: {
-      marginBottom: theme.spacing(0.5),
-    },
+    marginBottom: theme.spacing(0.5),
+  },
   statsText: {
-      marginBottom: theme.spacing(0.5),
-      color: theme.palette.primary.dark,
-    },
+    marginBottom: theme.spacing(0.5),
+    color: theme.palette.primary.dark,
+  },
   statsContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      [theme.breakpoints.down('xs')]: {
+    display: 'flex',
+    flexDirection: 'row',
+    [theme.breakpoints.down('xs')]: {
         flexDirection: 'column',
       },
-    },
+  },
   textField: {
-      margin: theme.spacing(1),
-      [theme.breakpoints.down('xs')]: {
+    margin: theme.spacing(1),
+    [theme.breakpoints.down('xs')]: {
         marginLeft: 0,
         marginRight: 0,
       },
-    },
+  },
   imagesContainer: {
-      [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('sm')]: {
         marginTop: theme.spacing(1),
       },
-    },
+  },
 }),
 );
 interface RecipeHeaderProps{

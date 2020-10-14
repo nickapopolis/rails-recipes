@@ -36,9 +36,9 @@ export default function RecipeIndex(props: RecipeIndexProps) {
     <div className={classes.recipeSearchBox}>
       <Searchbox searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
     </div>
-    <div className={classes.recipeCategories}>
+    {/* <div className={classes.recipeCategories}>
       <RecipeCategories/>
-    </div>
+    </div> */}
     <RecipeSearchResults searchQuery={searchQuery} />
   </div>;
 }

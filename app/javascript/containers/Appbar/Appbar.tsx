@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
+  appBarSearchboxContainer: {
+    paddingLeft: theme.spacing(4),
+    paddingTop: theme.spacing(3),
+  },
   navIconHide: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
@@ -45,7 +49,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   icon: {
     margin: theme.spacing(1),
   },
-  toolbar: theme.mixins.toolbar,
   toolbarCustom: {
     minHeight: '56px',
     backgroundColor: 'transparent',
@@ -105,7 +108,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   accountDropdown: {
     right: 0,
     position: 'fixed',
-  }
+  },
 }));
 
 interface MenuProps{
@@ -191,7 +194,7 @@ export default function MenuAppBar(props: MenuProps) {
       </nav>
       <div className={classes.rightContentContainer}>
         {!hideSearch && <div className={classes.appBarNew}>
-          <AppbarSearchBox/>
+          <div className={classes.appBarSearchboxContainer}><AppbarSearchBox/></div>
           <AccountDropdown />
         </div>}
         {hideSearch && <div className={classes.accountDropdown}>
@@ -199,7 +202,6 @@ export default function MenuAppBar(props: MenuProps) {
         </div>}
         <main className={classes.content}>
           <Snackbar/>
-          {!hideSearch && <div className={classes.toolbar} />}
           {props.children}
         </main>
       </div>

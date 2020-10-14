@@ -29,9 +29,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   toolbarCustom: {
     minHeight: '72px',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: drawerWidth,
-    },
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -39,12 +36,17 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   appBar: {
     zIndex: theme.zIndex.drawer - 1,
     backgroundColor: theme.palette.background.paper,
+    width: 'auto',
+    top: theme.spacing(2),
+    borderRadius: '4px',
+    right: theme.spacing(8),
   },
   buttonsContainer: {
 
   },
   title: {
     color: theme.palette.text.primary,
+    marginRight: theme.spacing(3),
   },
 }));
 
