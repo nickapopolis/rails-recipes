@@ -5,11 +5,11 @@ import { RecipeForm } from './forms/RecipeForm';
 import RecipeInstructions from './components/RecipeInstructions';
 import RecipeIngredients from './components/RecipeIngredients';
 import RecipeAppBar from './components/RecipeAppBar';
-import { Mutation } from 'react-apollo';
+import { Mutation } from '@apollo/react-components';
 import gql from 'graphql-tag';
 import * as _ from 'lodash';
 import { ErrorContext } from '../../components/ErrorContext';
-import { ApolloError } from 'apollo-client';
+import { ApolloError } from '@apollo/client';
 
 const CREATE_RECIPE = gql`
   mutation CreateRecipe($input: RecipeCreateInput!) {

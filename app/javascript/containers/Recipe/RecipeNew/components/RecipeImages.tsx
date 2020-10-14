@@ -2,7 +2,7 @@ import * as React from 'react';
 import Icon from '@material-ui/core/Icon';
 import { Theme, Typography } from '@material-ui/core';
 import classNames from 'classnames';
-import { Mutation } from 'react-apollo';
+import { Mutation } from '@apollo/react-components';
 import Dropzone from 'react-dropzone';
 import gql from 'graphql-tag';
 import {

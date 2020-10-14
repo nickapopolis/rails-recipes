@@ -15,7 +15,7 @@ import {
   makeStyles,
   createStyles,
 } from '@material-ui/styles';
-import { Mutation } from 'react-apollo';
+import { Mutation } from '@apollo/react-components';
 import gql from 'graphql-tag';
 import classNames from 'classnames';
 import * as _ from 'lodash';
@@ -116,32 +116,33 @@ export default function SignUp() {
     event.preventDefault();
   }
 
+  async function onSubmit({ fields }) {
+    const user = _.mapValues(fields, 'value');
+    const apiUser = {
+      first_name: user.firstName,
+      last_name: user.lastName,
+      email: user.email,
+      password: user.password,
+      password_confirmation: user.passwordConfirmation,
+    };
+    const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+    const response = await fetch('/users', {
+      method: 'POST',
+      mode: 'same-origin',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken,
+      },
+      body: JSON.stringify({ user: apiUser }),
+    });
+    if (response.status === 201) {
+      window.location.reload();
+    }
+  }
   return  (
     <FormState
-      onSubmit={async ({ fields }) => {
-        const user = _.mapValues(fields, 'value');
-        const apiUser = {
-          first_name: user.firstName,
-          last_name: user.lastName,
-          email: user.email,
-          password: user.password,
-          password_confirmation: user.passwordConfirmation,
-        };
-        const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
-        const response = await fetch('/users', {
-          method: 'POST',
-          mode: 'same-origin',
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-          },
-          body: JSON.stringify({ user: apiUser }),
-        });
-        if (response.status === 201) {
-          window.location.reload();
-        }
-      }}
+      onSubmit={onSubmit}
       initialValues={initialFormValues()}>
       {(formDetails) => {
         const { fields } = formDetails;

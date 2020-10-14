@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RecipeResponse } from './types';
-import { Mutation } from 'react-apollo';
+import { Mutation } from '@apollo/react-components';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import gql from 'graphql-tag';
@@ -16,7 +16,7 @@ import {
   Theme,
 } from '@material-ui/core';
 
-import { ApolloError } from 'apollo-client';
+import { ApolloError } from '@apollo/client';
 
 interface RecipeSearchResultCardProps {
   recipe?: RecipeResponse;
