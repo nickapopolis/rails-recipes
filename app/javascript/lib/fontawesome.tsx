@@ -21,6 +21,7 @@ import {
     faChevronDown,
     faChevronUp,
     faSlidersH,
+    faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -44,6 +45,7 @@ library.add(
     faChevronDown,
     faChevronUp,
     faSlidersH,
+    faTrash,
 );
 
 dom.watch();

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "/my_recipes", to: "pages#index"
   get "/users/sign_up", to: "pages#index"
   get "/users/sign_in", to: "pages#index"
+  get "/users/:id/edit", to: "pages#index"
   get "/search/:query", to: "pages#index"
   get "/search", to: "pages#index"
 

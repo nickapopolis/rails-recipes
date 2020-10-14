@@ -93,6 +93,9 @@ export default function AccountDropdown() {
     });
     window.location.reload();
   }
+  function userEditUrl(){
+    return `users/${user.id}/edit`;
+  }
   return (
     <>
       <IconButton
@@ -120,20 +123,21 @@ export default function AccountDropdown() {
             vertical: 'top',
             horizontal: 'center',
           }}>
-          {user && <MenuItem className={classes.profileMenuItem}>
-            <div className={classes.accountDetails}>
-              <Typography className={classes.name}>{user.firstName} {user.lastName}</Typography>
-              <Typography>{user.email}</Typography>
-            </div>
-            <div className={classes.editProfile}>
-              <ListItemIcon>
-                <Icon className={classNames(classes.listItemIcon, 'fa fa-user')} />
-              </ListItemIcon>
-              <ListItemText primary="Edit profile" />
-            </div>
-            </MenuItem>
+          {user && <Link to={userEditUrl()} className={classes.menuItemLink}>
+            <MenuItem className={classes.profileMenuItem}>
+              <div className={classes.accountDetails}>
+                <Typography className={classes.name}>{user.firstName} {user.lastName}</Typography>
+                <Typography>{user.email}</Typography>
+              </div>
+              <div className={classes.editProfile}>
+                <ListItemIcon>
+                  <Icon className={classNames(classes.listItemIcon, 'fa fa-user')} />
+                </ListItemIcon>
+                <ListItemText primary="Edit profile" />
+              </div>
+              </MenuItem>
+            </Link>
           }
-
           {!user && <Link to="/users/sign_up" className={classes.menuItemLink}>
             <MenuItem>
             <ListItemIcon>

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
-import Home from '../containers/Recipe/RecipeIndex/components/RecipeSearchResults';
 import SignIn from '../containers/User/SignIn';
 import SignUp from '../containers/User/SignUp';
+import UserEdit from '../containers/User/UserEdit';
 import RecipeDetail from '../containers/Recipe/RecipeDetail';
 import RecipeNew, { RecipeEdit } from '../containers/Recipe/RecipeNew';
 import RecipeIndex from '../containers/Recipe/RecipeIndex';
@@ -26,6 +26,7 @@ const routes = (
       <Route exact path="/my_recipes" component={withAppBar(MyRecipesIndex)} />
       <Route exact path="/users/sign_in" component={withAppBar(SignIn)} />
       <Route exact path="/users/sign_up" component={withAppBar(SignUp)} />
+      <Route exact path="/users/:id/edit" component={withAppBar(UserEdit)} />
     </Switch>
   </div>
 );
