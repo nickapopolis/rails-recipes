@@ -44,3 +44,10 @@ jobs:
         bundle exec rails db:create
         bundle exec rails db:migrate
         bundle exec rails test
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: '10.22'
+    - name: Install yarn and run front end tests
+      run: |
+        yarn install --frozen-lockfile
+        yarnpkg run test

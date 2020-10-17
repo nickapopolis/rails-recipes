@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import Downshift from 'downshift';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 import * as _ from 'lodash';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
@@ -272,9 +272,9 @@ function SearchResults(props: SearchResultsProps) {
 
   const mapDispatchToProps = (dispatch) => {
     return {
-    selectRecipe: (recipe) => {
+      selectRecipe: (recipe) => {
       dispatch(push(`/recipes/${recipe.id}`));
     },
-  };
+    };
   };
   export default connect(null, mapDispatchToProps)(SearchResults);

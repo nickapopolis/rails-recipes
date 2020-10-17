@@ -3,7 +3,7 @@ import { Divider, Hidden } from '@material-ui/core';
 import RecipeHeader from './components/RecipeHeader';
 import RecipeIngredients from './components/RecipeIngredients';
 import RecipeInstructions from './components/RecipeInstructions';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 import gql from 'graphql-tag';
 
 const GET_RECIPE = gql`

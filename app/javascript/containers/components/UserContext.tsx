@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { createContext } from 'react';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 
 interface User {
   firstName: string;
   lastName: string;
   email: string;
-  id: number;
+  id: string;
 }
 interface UserContextValue {
   user?: User;
@@ -24,6 +24,7 @@ const CURRENT_USER_QUERY = gql`
       firstName
       lastName
       email
+      id
     }
   }
 `;
@@ -34,7 +35,7 @@ interface UserContextProviderProps {
 }
 function UserContextProvider({ children, client }: UserContextProviderProps) {
   return <Query query={CURRENT_USER_QUERY}>
-    {({ data , loading }) => {
+    {({ data }) => {
       return <UserContext.Provider value={{
         user: data ? data.currentUser : null,
         reload() {
@@ -46,4 +47,4 @@ function UserContextProvider({ children, client }: UserContextProviderProps) {
     }}
   </Query>;
 }
-export { UserContext, UserContextProvider };
+export { UserContext, UserContextProvider, User };

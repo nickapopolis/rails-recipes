@@ -5,7 +5,7 @@ scalar File
 scalar ISO8601DateTime
 
 type Ingredient {
-  id: Int!
+  id: ID!
   ingredientGroup: IngredientGroup
   name: String!
 }
@@ -17,7 +17,7 @@ type IngredientGroup {
 }
 
 type Label {
-  id: Int!
+  id: ID!
   name: String!
 }
 

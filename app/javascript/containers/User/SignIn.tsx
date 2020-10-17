@@ -72,27 +72,27 @@ export default function SignIn() {
     };
   }
 
-  return  (
-    <FormState
-      onSubmit={async ({ fields }) => {
-        const user = _.mapValues(fields, 'value');
-        const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
-        const response = await fetch('/users/sign_in', {
-          method: 'POST',
-          mode: 'same-origin',
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-          },
-          body: JSON.stringify({ user }),
-        });
-        if (response.status === 201) {
-          window.location.reload();
-        }else {
+  async function onSubmit({ fields }) {
+    const user = _.mapValues(fields, 'value');
+    const csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+    const response = await fetch('/users/sign_in', {
+      method: 'POST',
+      mode: 'same-origin',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken,
+      },
+      body: JSON.stringify({ user }),
+    });
+    if (response.status === 201) {
+      window.location.reload();
+    }
+  }
 
-        }
-      }}
+  return (
+    <FormState
+      onSubmit={onSubmit}
       initialValues={initialFormValues()}>
       {(formDetails) => {
         const { fields } = formDetails;
@@ -104,7 +104,9 @@ export default function SignIn() {
           <div className={classes.container}>
             <div className={classes.paper}>
             <div className={classes.logoContainer}>
-                <Typography className={classes.title} variant="h4">Sign in to your account</Typography>
+                <Typography className={classes.title} variant="h4">
+                  Sign in to your account
+                </Typography>
                 <img className={classes.logo} src={LogoTransparent}/>
               </div>
               <TextField
